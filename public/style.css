@@ -1,0 +1,41 @@
+main {
+    width: 70%;
+    margin:auto;
+}
+
+#imageAccueilMedecin {
+    width: 300px;
+}
+
+#imageAccueilBloc {
+    width: 500px;
+}
+
+.logoReseau {
+    width: 30px;
+}
+
+.avatarProfil {
+    width : 20px;
+}
+
+.fenetreConnexion{
+    width: 400px;
+    border: solid 1px;
+    border-color: rgba(0,0,0, 24%);
+    border-radius:20px;
+    padding: 20px;
+}
+
+#boutonConnexion {
+    display: flex;
+    justify-content: space-between;
+}
+
+footer {
+    margin-top: 30px;
+}
+
+header {
+    margin-bottom: 50px;
+}
