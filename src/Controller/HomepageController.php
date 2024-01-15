@@ -19,10 +19,9 @@ class HomepageController extends AbstractController
     public function fetchApiCentersData() : array
     {
             $response = $this->httpClient->request(
-            'GET', 'https://127.0.0.1:8001/api/centers',['verify_peer' => false,
+            'GET', 'https://127.0.0.1:8000/api/centers',['verify_peer' => false,
             'verify_host' => false,]);
 
-        $statusCode = $response->getStatusCode();
         $content = $response->getContent();
         $content = $response->toArray();
 
@@ -30,7 +29,7 @@ class HomepageController extends AbstractController
 
     }
 
-    #[Route('/')]
+    #[Route('/', name: 'homepage')]
     public function homepage(): Response
     {
         return $this->render('homepage.html.twig');
@@ -43,7 +42,7 @@ class HomepageController extends AbstractController
     }
 
 
-    #[Route('/centers/{slug}')]
+    #[Route('/centers/{slug}', name: 'centers')]
     public function centers($slug = null): Response
     {
         if ($slug) {
@@ -51,13 +50,13 @@ class HomepageController extends AbstractController
                 'Vous avez choisi le centre '.$slug
             ); 
         } else {
-            return new Response(
-                'Vous n\'avez pas choisi de centre'
-            );
+            $JsonCenters = $this->fetchApiCentersData();
+            return $this->render('centers.html.twig',
+        ["JsonCenters" => $JsonCenters]);
         }
     }
 
-    #[Route('/create-account')]
+    #[Route('/create-account', name : 'connexion')]
     public function accountCreation() : Response
     {
         return $this->render('accountCreation.html.twig');

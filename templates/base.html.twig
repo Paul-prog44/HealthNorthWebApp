@@ -26,23 +26,23 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="accueil.html">Accueil</a>
+                        <a class="nav-link active" aria-current="page" href="{{ path('homepage') }}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Nos centres</a>
+                        <a class="nav-link active" aria-current="page" href="{{ path('centers') }}">Nos centres</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="#">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="loggin.html">Votre compte</a>
+                        <a class="nav-link active" href="{{ path('connexion') }} ">Votre compte</a>
                     </li>
                 </ul>
             </div>
         </div>
     </header>
         {% block body %}{% endblock %}
-        <footer class="navbar bg-body-tertiary">
+        <footer class="navbar bg-body-tertiary fixed-bottom">
         <div class="container-fluid">
             <p class="navbar-brand" href="#">North Health &copy 2023</p>
             <div>
