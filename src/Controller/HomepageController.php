@@ -29,10 +29,22 @@ class HomepageController extends AbstractController
 
     }
 
-    public function fetchCenterInformation() : array
+    public function fetchDoctorList() : array 
+    {
+        $response = $this->httpClient->request(
+            'GET', 'https://127.0.0.1:8000/api/doctors',['verify_peer' => false,
+            'verify_host' => false,]);
+
+        $content = $response->getContent();
+        $content = $response->toArray();
+
+        return $content;
+    }
+
+    public function fetchCenterInformation($slug) : array
     {
             $response = $this->httpClient->request(
-            'GET', 'https://127.0.0.1:8000/api/centers/53',['verify_peer' => false,
+            'GET', 'https://127.0.0.1:8000/api/centers/'.$slug ,['verify_peer' => false,
             'verify_host' => false,]);
 
         $content = $response->getContent();
@@ -59,11 +71,11 @@ class HomepageController extends AbstractController
     public function centers($slug = null): Response
     {
         if ($slug) {
-            $center = $this->fetchCenterInformation();
+            $center = $this->fetchCenterInformation($slug); //recupère un centre en fonction de son id
             return $this->render('center.html.twig',
-            ["center" => $center]); 
+            ["center" => $center]);
         } else {
-            $centers = $this->fetchApiCentersData();
+            $centers = $this->fetchApiCentersData(); //
             return $this->render('centers.html.twig',
             ["centers" => $centers]);
         }
@@ -75,9 +87,19 @@ class HomepageController extends AbstractController
         return $this->render('accountCreation.html.twig');
     }
 
-    #[Route('/reservation', name: 'reservation' )]
-    public function reservation() : Response
+    #[Route('/reservation/{slug}', name: 'reservation' )]
+    public function reservation($slug = null) : Response
     {
+        if ($slug) {
+            $center = $this->fetchCenterInformation($slug);
+            $doctors = $this->fetchDoctorList();
+            return $this->render('reservation.html.twig',
+            [
+            "center" => $center,
+            "doctors" => $doctors
+            ]);
+        } else {
         return $this->render('reservation.html.twig');
+        }
     }
 }
