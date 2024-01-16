@@ -29,6 +29,19 @@ class HomepageController extends AbstractController
 
     }
 
+    public function fetchCenterInformation() : array
+    {
+            $response = $this->httpClient->request(
+            'GET', 'https://127.0.0.1:8000/api/centers/53',['verify_peer' => false,
+            'verify_host' => false,]);
+
+        $content = $response->getContent();
+        $content = $response->toArray();
+
+        return $content;
+
+    }
+
     #[Route('/', name: 'homepage')]
     public function homepage(): Response
     {
@@ -46,13 +59,13 @@ class HomepageController extends AbstractController
     public function centers($slug = null): Response
     {
         if ($slug) {
-            return new Response(
-                'Vous avez choisi le centre '.$slug
-            ); 
+            $center = $this->fetchCenterInformation();
+            return $this->render('center.html.twig',
+            ["center" => $center]); 
         } else {
-            $JsonCenters = $this->fetchApiCentersData();
+            $centers = $this->fetchApiCentersData();
             return $this->render('centers.html.twig',
-        ["JsonCenters" => $JsonCenters]);
+            ["centers" => $centers]);
         }
     }
 
@@ -60,5 +73,11 @@ class HomepageController extends AbstractController
     public function accountCreation() : Response
     {
         return $this->render('accountCreation.html.twig');
+    }
+
+    #[Route('/reservation', name: 'reservation' )]
+    public function reservation() : Response
+    {
+        return $this->render('reservation.html.twig');
     }
 }

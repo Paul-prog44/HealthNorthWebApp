@@ -41,3 +41,9 @@ header {
     display: flex;
     flex-wrap: wrap;
 }
+
+.presentationCentre, .reservation{
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+}

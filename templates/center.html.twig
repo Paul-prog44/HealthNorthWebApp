@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Centre de {{ center.city }} {% endblock %}
+
+{% block body %}
+<main>
+    <div class="presentationCentre">
+        <h1>Votre centre de {{ center.city }}</h1>
+        <img src="#" alt="Photo du centre"/>
+        <p>Adresse du centre : {{ center.address }}</p>
+        <h3>Les spécialités du centre :</h3>
+        <ul>
+            {% for specialty in center.specialties %}
+            <li>{{ specialty.name }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ path('reservation') }}" class="btn btn-primary">Prendre rendez-vous</a>
+
+    </div>
+</main>
+
+{% endblock %}

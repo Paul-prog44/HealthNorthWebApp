@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent()}} | Réservation {% endblock %}
+
+{% block body %}
+<main>
+    <div class="reservation">
+        <form>
+  <div class="form-group row">
+    <label for="chosenCenter" class="col-4 col-form-label">Choix du centre</label> 
+    <div class="col-8">
+      <select id="chosenCenter" name="chosenCenter" class="custom-select">
+        <option value="rabbit">Rabbit</option>
+        <option value="duck">Duck</option>
+        <option value="fish">Fish</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="medicalField" class="col-4 col-form-label">Spécialités</label> 
+    <div class="col-8">
+      <select id="medicalField" name="medicalField" class="custom-select">
+        <option value="rabbit">Rabbit</option>
+        <option value="duck">Duck</option>
+        <option value="fish">Fish</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="choosenDoctor" class="col-4 col-form-label">Docteur</label> 
+    <div class="col-8">
+      <select id="choosenDoctor" name="choosenDoctor" class="custom-select">
+        <option value="rabbit">Rabbit</option>
+        <option value="duck">Duck</option>
+        <option value="fish">Fish</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="interventionDate" class="col-4 col-form-label">Date et heure</label> 
+    <div class="col-8">
+      <input id="interventionDate" name="interventionDate" type="text" class="form-control">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="medicalTreatment" class="col-4 col-form-label">Avez-vous des allergies ou suivez-vous un traitement particulier ?</label> 
+    <div class="col-8">
+      <textarea id="medicalTreatment" name="medicalTreatment" cols="40" rows="5" class="form-control"></textarea>
+    </div>
+  </div> 
+  <div class="form-group row">
+    <div class="offset-4 col-8">
+      <button name="submit" type="submit" class="btn btn-primary">Confirmer</button>
+    </div>
+  </div>
+</form>
+    </div>
+</main>
+
+{% endblock %}

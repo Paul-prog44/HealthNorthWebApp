@@ -6,13 +6,13 @@
 
 <main>
     <div class="centerDisplay">
-        {% for center in JsonCenters %}
+        {% for center in centers %}
         <div class="card m-2" style="width: 30%;">
             <img src="..." class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{center.name}}</h5>
                 <p class="card-text">{{ center.city }} - {{ center.country }}</p>
-                <a href="#" class="btn btn-primary">Consulter</a>
+                <a href="{{ path('centers') }}/{{ center.id }}" class="btn btn-primary">Consulter</a>
             </div>
         </div>
         {% endfor %}
