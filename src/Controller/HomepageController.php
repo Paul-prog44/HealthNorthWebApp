@@ -73,6 +73,22 @@ class HomepageController extends AbstractController
         ]);
     }
 
+    public function postDoctorInformation()
+    {
+        $this->httpClient->request(
+            'POST', 'https://127.0.0.1:8000/api/doctors' ,[
+            'verify_peer' => false,
+            'verify_host' => false,
+            'json' => [
+                'gender' => $_POST['gender'],
+                'lastName' => $_POST['lastName'],
+                'firstName' => $_POST['firstName'],
+                'emailAddress' => $_POST['emailAddress'],
+            ]
+            ]);
+    }
+    
+
     
 
     #[Route('/', name: 'homepage')]
@@ -94,7 +110,7 @@ class HomepageController extends AbstractController
         if ($slug) {
             $center = $this->fetchCenterInformation($slug); //recupère un centre en fonction de son id
             return $this->render('center.html.twig',
-            ["center" => $center]);
+            ["center" => $center]); //On passe le centre à la vue
         } else {
             $centers = $this->fetchApiCentersData(); //
             return $this->render('centers.html.twig',
@@ -114,6 +130,7 @@ class HomepageController extends AbstractController
         if ($slug) {
             $center = $this->fetchCenterInformation($slug);
             $doctors = $this->fetchDoctorList();
+            // dd( $doctors[0]["center"]["name"]. $center['name']);
             return $this->render('reservation.html.twig',
             [
             "center" => $center,
@@ -135,9 +152,27 @@ class HomepageController extends AbstractController
     {
         try {
             $this->postPatientInformation();
-        return $this->render('confirmationAccountCreation.html.twig');
+            return $this->render('confirmationAccountCreation.html.twig');
         } catch (Exception $e) {
             return $this->render('errorTemplate.html.twig', ["error" => $e]);
         }
+    }
+
+    #[Route('/addDoctor', name : 'addDoctor')]
+    public function createCenter() : Response
+    {
+        return $this->render('addDoctor.html.twig');
+    }
+
+    #[Route('/confirmationDoctorCreation', name : 'confirmationDoctorCreation')]
+    public function confirmationDoctorCreation() : Response
+    {
+        try {
+            $this->postDoctorInformation();
+            return $this->render('confirmationDoctorCreated.html.twig', ["doctor" => $_POST]
+        );
+        } catch (Exception $e) {
+            return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        }   
     }
 }

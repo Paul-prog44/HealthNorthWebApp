@@ -20,7 +20,7 @@
           <label for="choosenDoctor" class="col-4 col-form-label">Docteur</label> 
           <div class="col-8">
             <select id="choosenDoctor" name="choosenDoctor" class="custom-select">
-              {% for doctor in doctors |filter(doctor =>  doctor.center.name == center.name) %}
+              {% for doctor in doctors | filter(doctor => doctor.center.name == center.name ) %} {#Si un docteur n'a pas de centre attribué = crash #}
               <option value="{{ doctor.lastName }}">{{ doctor.lastName }}</option>
               {% endfor %}
             </select>

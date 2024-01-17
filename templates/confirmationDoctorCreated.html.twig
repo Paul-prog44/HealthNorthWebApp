@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Confirmation d'ajout {% endblock %}
+
+{% block body %}
+
+<main class="d-flex align-items-center flex-column">
+    <h3>Le docteur {{ doctor["lastName"] }} a bien été ajouté.</h3>
+    <a href="{{ path('addDoctor') }}"><button type="button" class="btn btn-primary mt-3">Ajouter un autre médecin</button></a>
+    <a href="{{ path('homepage') }}"><button type="button" class="btn btn-primary mt-3">Revenir à l'accueil</button></a>
+
+</main>
+
+{% endblock %}

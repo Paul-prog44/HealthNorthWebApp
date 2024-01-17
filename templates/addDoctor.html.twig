@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Ajouter un docteur {% endblock %}
+
+{% block body %}
+
+<main class="d-flex align-items-center flex-column">
+    <h2>Ajouter un docteur</h2>
+    <form action="{{ path('confirmationDoctorCreation') }}" method="POST">
+                <p>Genre :</p>
+                <div>
+                    <input type="radio" id="Madame" name="gender" value="Madame" checked />
+                    <label for="Madame">Madame</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="Monsieur" name="gender" value="Monsieur" />
+                    <label for="Monsieur">Monsieur</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="Autre" name="gender" value="Autre" />
+                    <label for="Autre">Autre</label>
+                </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="firstName" >Prénom :</label></span>
+                <input name="firstName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="lastName">Nom de famille :</label></span>
+                <input name="lastName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+             <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="emailAddress" >Adresse électronique :</label></span>
+                <input name="emailAddress" type="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="emailAddressConfirmation" >Confirmation adresse électronique :</label></span>
+                <input name="emailAddressConfirmation" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary mt-3">Ajouter</button>
+            </div>
+            <div>
+                <a href="{{ path('homepage') }}"><button type="button" class="btn btn-primary mt-3">Annuler</button></a>
+        </div>
+    </form>
+</main>
+
+{% endblock %}
