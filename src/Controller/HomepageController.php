@@ -85,7 +85,7 @@ class HomepageController extends AbstractController
                 'firstName' => $_POST['firstName'],
                 'emailAddress' => $_POST['emailAddress'],
             ]
-            ]);
+        ]);
     }
     
 
@@ -161,18 +161,19 @@ class HomepageController extends AbstractController
     #[Route('/addDoctor', name : 'addDoctor')]
     public function createCenter() : Response
     {
-        return $this->render('addDoctor.html.twig');
+        $centers = $this->fetchApiCentersData();
+        return $this->render('addDoctor.html.twig', ["centers" => $centers]);
     }
 
     #[Route('/confirmationDoctorCreation', name : 'confirmationDoctorCreation')]
     public function confirmationDoctorCreation() : Response
     {
-        try {
+        // try {
             $this->postDoctorInformation();
             return $this->render('confirmationDoctorCreated.html.twig', ["doctor" => $_POST]
         );
-        } catch (Exception $e) {
-            return $this->render('errorTemplate.html.twig', ["error" => $e]);
-        }   
+        // } catch (Exception $e) {
+        //     return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        // }   
     }
 }

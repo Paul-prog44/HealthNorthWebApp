@@ -38,6 +38,17 @@
                 <span class="input-group-text" id="inputGroup-sizing-sm"><label for="emailAddressConfirmation" >Confirmation adresse électronique :</label></span>
                 <input name="emailAddressConfirmation" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
+            <div class="form-group row">
+                <label for="center" class="col-5 col-form-label">Choisir un centre :</label> 
+                <div class="col-8">
+                    <select id="center" name="center" class="custom-select">
+                        {% for center in centers %}
+                        <option value="{{ center.id }}">{{ center.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+            </div> 
             <div>
                 <button type="submit" class="btn btn-primary mt-3">Ajouter</button>
             </div>
