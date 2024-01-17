@@ -4,45 +4,65 @@
 
 {% block body %}
 <main class="d-flex align-items-center">
-    <div class="fenetreConnexion m-auto" >
+    <form action="{{ path('confirmationAccountCreation') }}" method="POST">
+        <div class="fenetreConnexion m-auto" >
+            <fieldset>
+                <legend>Genre :</legend>
+                <div>
+                    <input type="radio" id="Madame" name="gender" value="Madame" checked />
+                    <label for="Madame">Madame</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="Monsieur" name="gender" value="Monsieur" />
+                    <label for="Monsieur">Monsieur</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="Autre" name="gender" value="Autre" />
+                    <label for="Autre">Autre</label>
+                </div>
+            </fieldset>
+        
             <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-sm">Nom :</span>
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="lastName">Nom de famille :</label></span>
+                <input name="lastName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-sm">Prénom :</span>
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="firstName" >Prénom :</label></span>
+                <input name="firstName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-sm">Adresse :</span>
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="address" >Adresse :</label></span>
+                <input name="address" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-sm">Adresse e_mail</span>
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="emailAddress" >Adresse électronique :</label></span>
+                <input name="emailAddress" type="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-sm">Confirmation adresse e-mail :</span>
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="emailAddressConfirmation" >Confirmation adresse électronique :</label></span>
+                <input name="emailAddressConfirmation" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-sm">Mot de passe :</span>
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="password" >Mot de passe :</label></span>
+                <input name="password" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-sm">Confirmation mot de passe :</span>
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="passwordConfirmation" >Confirmation du mot de passe :</label></span>
+                <input name="passwordConfirmation" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-sm">Numéro de sécurité sociale :</span>
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="socialSecurity" >Numéro de sécurité sociale :</label></span>
+                <input name="socialSecurity" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
         <div>
-            <button type="button" class="btn btn-primary">Créer mon compte</button>
+            <button type="submit" class="btn btn-primary mt-3">S'enregistrer</button>
         </div>
         <div>
-            <a href="accueil.html"><button type="button" class="btn btn-primary mt-3">Annuler</button></a>
+            <a href="{{ path('homepage') }}"><button type="button" class="btn btn-primary mt-3">Annuler</button></a>
         </div>
-    </div>
+        </div>
+    </form>
 </main>
 {% endblock %}

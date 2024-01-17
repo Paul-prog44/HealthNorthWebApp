@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Erreur {% endblock %}
+
+{% block body %}
+<main>
+    <h3>Une erreur s'est produite, merci de réessayer.</h3>
+    <p>Erreur : {{ error }} </p>
+</main>
+
+{% endblock %}
