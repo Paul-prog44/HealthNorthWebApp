@@ -42,7 +42,7 @@ class HomepageController extends AbstractController
         return $content;
     }
 
-    public function fetchCenterInformation($slug) : array
+    public function fetchCenterInformation(int $slug) 
     {
             $response = $this->httpClient->request(
             'GET', 'https://127.0.0.1:8000/api/centers/'.$slug ,['verify_peer' => false,
@@ -52,7 +52,18 @@ class HomepageController extends AbstractController
         $content = $response->toArray();
 
         return $content;
+    }
 
+    public function fetchSpecialties() 
+    {
+            $response = $this->httpClient->request(
+            'GET', 'https://127.0.0.1:8000/api/specialties' ,['verify_peer' => false,
+            'verify_host' => false,]);
+
+        $content = $response->getContent();
+        $content = $response->toArray();
+
+        return $content;
     }
 
     public function postPatientInformation()
@@ -84,6 +95,7 @@ class HomepageController extends AbstractController
                 'lastName' => $_POST['lastName'],
                 'firstName' => $_POST['firstName'],
                 'emailAddress' => $_POST['emailAddress'],
+                // 'center' => $_POST['center']
             ]
         ]);
     }
@@ -130,7 +142,6 @@ class HomepageController extends AbstractController
         if ($slug) {
             $center = $this->fetchCenterInformation($slug);
             $doctors = $this->fetchDoctorList();
-            // dd( $doctors[0]["center"]["name"]. $center['name']);
             return $this->render('reservation.html.twig',
             [
             "center" => $center,
@@ -162,18 +173,22 @@ class HomepageController extends AbstractController
     public function createCenter() : Response
     {
         $centers = $this->fetchApiCentersData();
-        return $this->render('addDoctor.html.twig', ["centers" => $centers]);
+        $specialties = $this->fetchSpecialties();
+        return $this->render('addDoctor.html.twig', [
+            "centers" => $centers, 
+            "specialties" => $specialties
+        ]);
     }
 
     #[Route('/confirmationDoctorCreation', name : 'confirmationDoctorCreation')]
     public function confirmationDoctorCreation() : Response
     {
-        // try {
+        try {
             $this->postDoctorInformation();
             return $this->render('confirmationDoctorCreated.html.twig', ["doctor" => $_POST]
         );
-        // } catch (Exception $e) {
-        //     return $this->render('errorTemplate.html.twig', ["error" => $e]);
-        // }   
+        } catch (Exception $e) {
+            return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        }
     }
 }
