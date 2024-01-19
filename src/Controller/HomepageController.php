@@ -86,8 +86,11 @@ class HomepageController extends AbstractController
 
     public function postDoctorInformation()
     {
+        $centerId = $_POST['centerId'];
+        $specialtyId = $_POST['specialtyId'];
+
         $this->httpClient->request(
-            'POST', 'https://127.0.0.1:8000/api/doctors' ,[
+            'POST', 'https://127.0.0.1:8000/api/doctors/'.$centerId.'/'.$specialtyId ,[
             'verify_peer' => false,
             'verify_host' => false,
             'json' => [
@@ -95,7 +98,6 @@ class HomepageController extends AbstractController
                 'lastName' => $_POST['lastName'],
                 'firstName' => $_POST['firstName'],
                 'emailAddress' => $_POST['emailAddress'],
-                // 'center' => $_POST['center']
             ]
         ]);
     }

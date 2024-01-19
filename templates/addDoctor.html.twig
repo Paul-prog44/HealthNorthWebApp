@@ -39,9 +39,9 @@
                 <input name="emailAddressConfirmation" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="form-group row">
-                <label for="center" class="col-5 col-form-label">Choisir un centre :</label> 
+                <label for="centerId" class="col-5 col-form-label">Choisir un centre :</label> 
                 <div class="col-8">
-                    <select id="center" name="center" class="custom-select">
+                    <select id="centerId" name="centerId" class="custom-select">
                         {% for center in centers %}
                         <option value="{{ center.id }}">{{ center.name }}</option>
                         {% endfor %}
@@ -49,9 +49,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="specialty" class="col-5 col-form-label">Choisir une spécialité :</label> 
+                <label for="specialtyId" class="col-5 col-form-label">Choisir une spécialité :</label> 
                 <div class="col-8">
-                    <select id="specialty" name="specialty" class="custom-select">
+                    <select id="specialtyId" name="specialtyId" class="custom-select">
                         {% for specialty in specialties %}
                         <option value="{{ specialty.id }}">{{ specialty.name }}</option>
                         {% endfor %}
