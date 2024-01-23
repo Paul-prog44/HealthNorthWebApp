@@ -86,11 +86,9 @@ class HomepageController extends AbstractController
 
     public function postDoctorInformation()
     {
-        $centerId = $_POST['centerId'];
-        $specialtyId = $_POST['specialtyId'];
 
         $this->httpClient->request(
-            'POST', 'https://127.0.0.1:8000/api/doctors/'.$centerId.'/'.$specialtyId ,[
+            'POST', 'https://127.0.0.1:8000/api/doctors' ,[
             'verify_peer' => false,
             'verify_host' => false,
             'json' => [
@@ -98,6 +96,8 @@ class HomepageController extends AbstractController
                 'lastName' => $_POST['lastName'],
                 'firstName' => $_POST['firstName'],
                 'emailAddress' => $_POST['emailAddress'],
+                'centerId' => $_POST['centerId'],
+                'specialtyId' => $_POST['specialtyId']
             ]
         ]);
     }
@@ -185,12 +185,18 @@ class HomepageController extends AbstractController
     #[Route('/confirmationDoctorCreation', name : 'confirmationDoctorCreation')]
     public function confirmationDoctorCreation() : Response
     {
-        try {
-            $this->postDoctorInformation();
-            return $this->render('confirmationDoctorCreated.html.twig', ["doctor" => $_POST]
-        );
-        } catch (Exception $e) {
-            return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        if ($_POST["emailAddress"] == $_POST["emailAddressConfirmation"])
+        {
+            try {
+                $this->postDoctorInformation();
+                return $this->render('confirmationDoctorCreated.html.twig', ["doctor" => $_POST]
+            );
+            } catch (Exception $e) {
+                return $this->render('errorTemplate.html.twig', ["error" => $e]);
+            }
+        } else 
+        {
+            return $this->render('missmatchEmailAddress.html.twig');
         }
     }
 }
