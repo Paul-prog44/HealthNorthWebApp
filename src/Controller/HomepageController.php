@@ -86,7 +86,6 @@ class HomepageController extends AbstractController
 
     public function postDoctorInformation()
     {
-
         $this->httpClient->request(
             'POST', 'https://127.0.0.1:8000/api/doctors' ,[
             'verify_peer' => false,
@@ -98,6 +97,22 @@ class HomepageController extends AbstractController
                 'emailAddress' => $_POST['emailAddress'],
                 'centerId' => $_POST['centerId'],
                 'specialtyId' => $_POST['specialtyId']
+            ]
+        ]);
+    }
+
+    public function postCenterInformation()
+    {
+        $this->httpClient->request(
+            'POST', 'https://127.0.0.1:8000/api/centers' ,[
+            'verify_peer' => false,
+            'verify_host' => false,
+            'json' => [
+                'name' => $_POST['name'],
+                'city' => $_POST['city'],
+                'country' => $_POST['country'],
+                'address' => $_POST['address'],
+                'specialtiesArray' => $_POST['specialties']
             ]
         ]);
     }
@@ -198,5 +213,26 @@ class HomepageController extends AbstractController
         {
             return $this->render('missmatchEmailAddress.html.twig');
         }
+    }
+
+    #[Route('/addCenter', name : 'addCenter')]
+    public function createDoctor() : Response
+    {
+        $specialties = $this->fetchSpecialties();
+        return $this->render('addCenter.html.twig', [
+            "specialties" => $specialties
+        ]);
+    }
+
+    #[Route('/confirmationCenterCreation', name : 'confirmationCenterCreation')]
+    public function confirmationCenterCreation() : Response
+    {
+            try {
+                $this->postCenterInformation();
+                return $this->render('confirmationCenterCreation.html.twig', ["center" => $_POST]
+            );
+            } catch (Exception $e) {
+                return $this->render('errorTemplate.html.twig', ["error" => $e]);
+            }
     }
 }
