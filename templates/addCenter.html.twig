@@ -24,7 +24,9 @@
                 <span class="input-group-text" id="inputGroup-sizing-sm"><label for="address" >Adresse :</label></span>
                 <input name="address" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
-
+            <div>
+                <p>Choisissez une image :<p>
+                <input type="file" name="imageCenter" id="imageCenter">
 
             <p>Quelles spécialités sont disponibles dans le centre :</p>
                         {% for specialty in specialties %}
@@ -40,7 +42,7 @@
                 <button type="submit" class="btn btn-primary mt-3">Ajouter</button>
             </div>
             <div>
-                <a href="{{ path('homepage') }}"><button type="button" class="btn btn-primary mt-3">Annuler</button></a>
+                <a href="{{ path('centers') }}"><button type="button" class="btn btn-primary mt-3">Annuler</button></a>
         </div>
     </form>
 </main>
