@@ -6,7 +6,7 @@
 
 <main class="d-flex align-items-center flex-column">
     <h2>Ajouter un centre médical</h2>
-    <form action="{{ path('confirmationCenterCreation')}}" method="POST">
+    <form enctype="multipart/form-data" action="{{ path('confirmationCenterCreation')}}" method="POST">
                 
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm"><label for="name" >Nom du centre :</label></span>
@@ -24,6 +24,8 @@
                 <span class="input-group-text" id="inputGroup-sizing-sm"><label for="address" >Adresse :</label></span>
                 <input name="address" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
+
+
             <p>Quelles spécialités sont disponibles dans le centre :</p>
                         {% for specialty in specialties %}
                         <div>

@@ -42,16 +42,28 @@ class HomepageController extends AbstractController
         return $content;
     }
 
-    public function fetchCenterInformation(int $slug) 
+    public function fetchCenterInformation(int $centerId) 
     {
             $response = $this->httpClient->request(
-            'GET', 'https://127.0.0.1:8000/api/centers/'.$slug ,['verify_peer' => false,
+            'GET', 'https://127.0.0.1:8000/api/centers/'.$centerId ,['verify_peer' => false,
             'verify_host' => false,]);
 
         $content = $response->getContent();
         $content = $response->toArray();
 
         return $content;
+    }
+
+    public function deleteCenter(int $centerId) 
+    {
+            $response = $this->httpClient->request(
+            'DELETE', 'https://127.0.0.1:8000/api/centers/'.$centerId ,['verify_peer' => false,
+            'verify_host' => false,]);
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode === 204 ) {
+            return $this->render('confirmationCenterDeletion.html.twig');
+        }
     }
 
     public function fetchSpecialties() 
@@ -153,11 +165,11 @@ class HomepageController extends AbstractController
         return $this->render('accountCreation.html.twig');
     }
 
-    #[Route('/reservation/{slug}', name: 'reservation' )]
-    public function reservation($slug = null) : Response
+    #[Route('/reservation/{centerId}', name: 'reservation' )]
+    public function reservation($centerId = null) : Response
     {
-        if ($slug) {
-            $center = $this->fetchCenterInformation($slug);
+        if ($centerId) {
+            $center = $this->fetchCenterInformation($centerId);
             $doctors = $this->fetchDoctorList();
             return $this->render('reservation.html.twig',
             [
@@ -234,5 +246,15 @@ class HomepageController extends AbstractController
             } catch (Exception $e) {
                 return $this->render('errorTemplate.html.twig', ["error" => $e]);
             }
+    }
+
+    #[Route('deleteCenter/{centerId}', name: 'deleteCenter')]
+    public function deleteSpecificCenter($centerId = null) : Response
+    {
+        try {
+            return $this->deleteCenter($centerId);
+        } catch (Exception $e) {
+            return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        }
     }
 }

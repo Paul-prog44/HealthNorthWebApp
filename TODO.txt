@@ -1,0 +1,4 @@
+- Faire les update des centres, docteur et spécialités
+- Ranger les controlleurs
+- Mettre en place la sécurité
+- Gérer les images des centres
