@@ -1,4 +1,4 @@
-- Faire les update des centres, docteur et spécialités
+- Faire les update/delete des centres, docteur et spécialités
 - Ranger les controlleurs
 - Mettre en place la sécurité
-- Gérer les images des centres
+- Gérer les images des centres (Renommer les img, stocker leur emplacement en bdd, les afficher)
