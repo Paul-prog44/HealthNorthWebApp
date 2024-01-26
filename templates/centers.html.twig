@@ -9,7 +9,7 @@
     <div class="centerDisplay">
         {% for center in centers %}
         <div class="card m-2" style="width: 30%;">
-            <img src="..." class="card-img-top" alt="...">
+            <img src="/img/centerImg/{{center.imageFileName }}" class="card-img-top" alt="Photo du centre médical">
             <div class="card-body">
                 <h5 class="card-title">{{center.name}}</h5>
                 <p class="card-text">{{ center.city }} - {{ center.country }}</p>

@@ -25,7 +25,6 @@ class HomepageController extends AbstractController
 
         $content = $response->getContent();
         $content = $response->toArray();
-
         return $content;
 
     }
@@ -124,8 +123,8 @@ class HomepageController extends AbstractController
                 'city' => $_POST['city'],
                 'country' => $_POST['country'],
                 'address' => $_POST['address'],
-                'specialtiesArray' => $_POST['specialties']
-                // 'imageName' => $_FILES["imageCenter"]["name"]]
+                'specialtiesArray' => $_POST['specialties'],
+                'imageFileName' => $_FILES["imageCenter"]["name"]
             ]
         ]);
     }
