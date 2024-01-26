@@ -125,6 +125,7 @@ class HomepageController extends AbstractController
                 'country' => $_POST['country'],
                 'address' => $_POST['address'],
                 'specialtiesArray' => $_POST['specialties']
+                // 'imageName' => $_FILES["imageCenter"]["name"]]
             ]
         ]);
     }
@@ -241,45 +242,51 @@ class HomepageController extends AbstractController
     {
 
             try {
-                $target_dir = "img/";
-            $target_file = $target_dir . basename($_FILES["imageCenter"]["name"]);
-            $uploadOk = 1;
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-            // Check if image file is a actual image or fake image
-            if(isset($_POST["submit"])) {
-                $check = getimagesize($_FILES["imageCenter"]["tmp_name"]);
-                if($check !== false) {
-                    echo "File is an image - " . $check["mime"] . ".";
-                    $uploadOk = 1;
-                } else {
-                    echo "File is not an image.";
+                $target_dir = "img/centerImg/";
+                $target_file = $target_dir . basename($_FILES["imageCenter"]["name"]);
+                $uploadOk = 1;
+                $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                // Check if image file is a actual image or fake image
+                if(isset($_POST["submit"])) {
+                    $check = getimagesize($_FILES["imageCenter"]["tmp_name"]);
+                    if($check !== false) {
+                        echo "File is an image - " . $check["mime"] . ".";
+                        $uploadOk = 1;
+                    } else {
+                        return $this->render('errorTemplate.html.twig',
+                        ["error" => "Le format de cette image n'est pas accepté."]);
+                        $uploadOk = 0;
+                    }
+                }
+                // Check if file already exists
+                if (file_exists($target_file)) {
+                    return $this->render('errorTemplate.html.twig', ["error" => "Cette image existe déjà."]);
                     $uploadOk = 0;
                 }
-            }
-            // Check if file already exists
-            if (file_exists($target_file)) {
-                echo("Une erreur est survenue, merci de réessayer.");
-                $uploadOk = 0;
-            }
-            if ($_FILES["imageCenter"]["size"] > 500000) {
-                echo "Sorry, your file is too large.";
-                $uploadOk = 0;
-            }
-            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif" ) {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-            $uploadOk = 0;
-            }
-            if ($uploadOk == 0) {
-                echo "Votre image n'a pas pu être télechargée";
-              // if everything is ok, try to upload file
-              } else {
-                if (move_uploaded_file($_FILES["imageCenter"]["tmp_name"], $target_file)) {
-                    return $this->render('confirmationCenterCreation.html.twig', ["center" => $_POST]);
-                } else {
-                    return $this->render('errorTemplate.html.twig', ["error" => "Une erreur est survenue lors du téléchargement du fichier"]);
+                if ($_FILES["imageCenter"]["size"] > 500000) {
+                    return $this->render('errorTemplate.html.twig',
+                    ["error" => "La taille de l'image est trop grande"]);
+                    $uploadOk = 0;
                 }
-              }
+                if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                && $imageFileType != "gif" ) {
+                    return $this->render('errorTemplate.html.twig', 
+                    ["error" => "Seul les format d'image JPG, PNG, JPEG et GIF sont acceptés"]);
+                    $uploadOk = 0;
+                }
+                if ($uploadOk == 0) {
+                    return $this->render('errorTemplate.html.twig',
+                    ["error" => "Une erreur est survenue, merci de réessayer."]);
+                // if everything is ok, try to upload file
+                } else {
+                    if (move_uploaded_file($_FILES["imageCenter"]["tmp_name"], $target_file)) {
+                        $this->postCenterInformation();
+                        return $this->render('confirmationCenterCreation.html.twig', ["center" => $_POST]);
+                    } else {
+                        return $this->render('errorTemplate.html.twig',
+                        ["error" => "Une erreur est survenue lors du téléchargement du fichier"]);
+                    }
+                }
             } catch (Exception $e) {
                 return $this->render('errorTemplate.html.twig', ["error" => $e]);
             }
