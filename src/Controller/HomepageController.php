@@ -111,23 +111,6 @@ class HomepageController extends AbstractController
             ]
         ]);
     }
-
-    public function postCenterInformation()
-    {
-        $this->httpClient->request(
-            'POST', 'https://127.0.0.1:8000/api/centers' ,[
-            'verify_peer' => false,
-            'verify_host' => false,
-            'json' => [
-                'name' => $_POST['name'],
-                'city' => $_POST['city'],
-                'country' => $_POST['country'],
-                'address' => $_POST['address'],
-                'specialtiesArray' => $_POST['specialties'],
-                'imageFileName' => $_FILES["imageCenter"]["name"]
-            ]
-        ]);
-    }
     
 
     
@@ -138,26 +121,6 @@ class HomepageController extends AbstractController
         return $this->render('homepage.html.twig');
     }
 
-    #[Route('/centersList')]
-    public function centersList() : Response
-    {
-        return new Response (json_encode($this->fetchApiCentersData()));
-    }
-
-
-    #[Route('/centers/{slug}', name: 'centers')]
-    public function centers($slug = null): Response
-    {
-        if ($slug) {
-            $center = $this->fetchCenterInformation($slug); //recupère un centre en fonction de son id
-            return $this->render('center.html.twig',
-            ["center" => $center]); //On passe le centre à la vue
-        } else {
-            $centers = $this->fetchApiCentersData(); //
-            return $this->render('centers.html.twig',
-            ["centers" => $centers]);
-        }
-    }
 
     #[Route('/create-account', name : 'connexion')]
     public function accountCreation() : Response
@@ -224,80 +187,6 @@ class HomepageController extends AbstractController
         } else 
         {
             return $this->render('missmatchEmailAddress.html.twig');
-        }
-    }
-
-    #[Route('/addCenter', name : 'addCenter')]
-    public function createDoctor() : Response
-    {
-        $specialties = $this->fetchSpecialties();
-        return $this->render('addCenter.html.twig', [
-            "specialties" => $specialties
-        ]);
-    }
-
-    #[Route('/confirmationCenterCreation', name : 'confirmationCenterCreation')]
-    public function confirmationCenterCreation() : Response
-    {
-
-            try {
-                $target_dir = "img/centerImg/";
-                $target_file = $target_dir . basename($_FILES["imageCenter"]["name"]);
-                $uploadOk = 1;
-                $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-                // Check if image file is a actual image or fake image
-                if(isset($_POST["submit"])) {
-                    $check = getimagesize($_FILES["imageCenter"]["tmp_name"]);
-                    if($check !== false) {
-                        echo "File is an image - " . $check["mime"] . ".";
-                        $uploadOk = 1;
-                    } else {
-                        return $this->render('errorTemplate.html.twig',
-                        ["error" => "Le format de cette image n'est pas accepté."]);
-                        $uploadOk = 0;
-                    }
-                }
-                // Check if file already exists
-                if (file_exists($target_file)) {
-                    return $this->render('errorTemplate.html.twig', ["error" => "Cette image existe déjà."]);
-                    $uploadOk = 0;
-                }
-                if ($_FILES["imageCenter"]["size"] > 500000) {
-                    return $this->render('errorTemplate.html.twig',
-                    ["error" => "La taille de l'image est trop grande"]);
-                    $uploadOk = 0;
-                }
-                if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-                && $imageFileType != "gif" ) {
-                    return $this->render('errorTemplate.html.twig', 
-                    ["error" => "Seul les format d'image JPG, PNG, JPEG et GIF sont acceptés"]);
-                    $uploadOk = 0;
-                }
-                if ($uploadOk == 0) {
-                    return $this->render('errorTemplate.html.twig',
-                    ["error" => "Une erreur est survenue, merci de réessayer."]);
-                // if everything is ok, try to upload file
-                } else {
-                    if (move_uploaded_file($_FILES["imageCenter"]["tmp_name"], $target_file)) {
-                        $this->postCenterInformation();
-                        return $this->render('confirmationCenterCreation.html.twig', ["center" => $_POST]);
-                    } else {
-                        return $this->render('errorTemplate.html.twig',
-                        ["error" => "Une erreur est survenue lors du téléchargement du fichier"]);
-                    }
-                }
-            } catch (Exception $e) {
-                return $this->render('errorTemplate.html.twig', ["error" => $e]);
-            }
-    }
-
-    #[Route('deleteCenter/{centerId}', name: 'deleteCenter')]
-    public function deleteSpecificCenter($centerId = null) : Response
-    {
-        try {
-            return $this->deleteCenter($centerId);
-        } catch (Exception $e) {
-            return $this->render('errorTemplate.html.twig', ["error" => $e]);
         }
     }
 }

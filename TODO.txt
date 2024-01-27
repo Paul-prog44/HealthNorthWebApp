@@ -2,3 +2,4 @@
 - Ranger les controlleurs
 - Mettre en place la sécurité
 - Gérer les images des centres (Renommer les img, stocker leur emplacement en bdd, les afficher) DONE
+- Gérer les réservations
