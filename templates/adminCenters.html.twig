@@ -13,11 +13,12 @@
             <div class="card-body">
                 <h5 class="card-title">{{center.name}}</h5>
                 <p class="card-text">{{ center.city }} - {{ center.country }}</p>
-                <a href="{{ path('centers') }}/{{ center.id }}" class="btn btn-primary">Consulter</a>
+                <a href="{{ path('adminCenters') }}/{{ center.id }}" class="btn btn-primary">Consulter</a>
             </div>
         </div>
         {% endfor %}
     </div>
+    <a href="{{ path('addCenter') }}" class="btn btn-primary">Ajouter un centre</a>
 </main>
 
 {% endblock %}

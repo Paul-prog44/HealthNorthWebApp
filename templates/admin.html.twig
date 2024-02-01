@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Espace administrateur {% endblock %}
+
+{% block body %}
+<main>
+<div class="adminMenu">
+    <div class="card" style="width: 15rem;">
+        <div class="card-body">
+            <h5 class="card-title">Gestion des centres</h5>
+            <p class="card-text">Ajoutez, supprimez ou éditez un centre</p>
+            <a href="/admin/centers" class="btn btn-primary">Les centres</a>
+        </div>
+    </div>
+    <div class="card" style="width: 15rem;">
+        <div class="card-body">
+            <h5 class="card-title">Gestion des médecins</h5>
+            <p class="card-text">Ajoutez, supprimez ou éditez un médecin</p>
+            <a href="/admin/centers" class="btn btn-primary">Les médecins</a>
+        </div>
+    </div>
+    <div class="card" style="width: 15rem;">
+        <div class="card-body">
+            <h5 class="card-title">Gestion des spécialisations médicales</h5>
+            <p class="card-text">Ajoutez, supprimez ou éditez une spécialisation</p>
+            <a href="/admin/centers" class="btn btn-primary">Les spécialisations</a>
+        </div>
+    </div>
+    <div class="card" style="width: 15rem;">
+        <div class="card-body">
+            <h5 class="card-title">Gestion des réservations</h5>
+            <p class="card-text">Ajoutez, supprimez ou éditez une réservation</p>
+            <a href="/admin/centers" class="btn btn-primary">Les réservations</a>
+        </div>
+    </div>
+</div>
+</main>
+
+{% endblock %}

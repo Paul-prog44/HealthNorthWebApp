@@ -14,7 +14,7 @@
             <li>{{ specialty.name }}</li>
             {% endfor %}
         </ul>
-        <a href="{{ path('reservation') }}/{{ center.id }}" class="btn btn-primary mt-3">Prendre rendez-vous</a>
+        <a href="{{ path('deleteCenter') }}/{{ center.id }}" class="btn btn-primary mt-3">Supprimer ce centre</a>
         <a href="{{ path('centers') }}" class="btn btn-primary mt-3">Revenir aux centres</a>
     </div>
 </main>
