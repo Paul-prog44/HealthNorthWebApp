@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} |Modifier un centre {% endblock %}
+
+{% block body %}
+
+<main class="d-flex align-items-center flex-column">
+    <h2>Modifier un centre médical</h2>
+    <form enctype="multipart/form-data" action="{{ path('confirmationCenterEdition')}}/{{ currentCenter.id }}" method="POST">
+                
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="name" >Nom du centre :</label></span>
+                <input name="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ currentCenter.name}}">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="city">Ville :</label></span>
+                <input name="city" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ currentCenter.city}}">
+            </div>
+             <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="country" >Pays :</label></span>
+                <input name="country" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ currentCenter.country}}">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="address" >Adresse :</label></span>
+                <input name="address" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ currentCenter.address}}">
+            </div>
+            <div>
+            <img src="/img/centerImg/{{currentCenter.imageFileName }}" alt="Photo du centre médical" width="400px">
+
+                <p>Changer l'image du centre :<p>
+                <input type="file" name="imageCenter" id="imageCenter">
+            </div>
+            <p>Quelles spécialités sont disponibles dans le centre :</p>
+                        {% for specialty in specialties %}
+                        <div>
+                            <input type="checkbox" value="{{ specialty.id }}" id="{{specialty.name}}" name="specialties[]"
+                            {% if specialty.name in currentSpecialties %} checked {% endif %}/>
+                            <label for="{{ specialty.name }}">{{ specialty.name }}</label>
+                        <div>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary mt-3">Ajouter</button>
+            </div>
+            <div>
+                <a href="{{ path('centers') }}"><button type="button" class="btn btn-primary mt-3">Annuler</button></a>
+        </div>
+    </form>
+</main>
+
+{% endblock %}

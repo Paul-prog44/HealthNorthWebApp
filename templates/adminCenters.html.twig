@@ -5,7 +5,8 @@
 {% block body %}
 
 <main>
-    <h1>Choix du centre :</h1>
+    <a href="{{ path('addCenter') }}" class="btn btn-primary">Ajouter un centre</a>
+    <h2>Choix du centre :</h2>
     <div class="centerDisplay">
         {% for center in centers %}
         <div class="card m-2" style="width: 30%;">
@@ -18,7 +19,6 @@
         </div>
         {% endfor %}
     </div>
-    <a href="{{ path('addCenter') }}" class="btn btn-primary">Ajouter un centre</a>
 </main>
 
 {% endblock %}

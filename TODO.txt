@@ -4,3 +4,4 @@
 - Mettre en place la sécurité
 - Gérer les images des centres (Renommer les img, stocker leur emplacement en bdd, les afficher) DONE
 - Gérer les réservations
+- Réinitialiser les spécialités avant d'envoyer la nouvelle liste !

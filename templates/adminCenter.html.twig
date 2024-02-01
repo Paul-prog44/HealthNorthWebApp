@@ -14,8 +14,9 @@
             <li>{{ specialty.name }}</li>
             {% endfor %}
         </ul>
-        <a href="{{ path('deleteCenter') }}/{{ center.id }}" class="btn btn-primary mt-3">Supprimer ce centre</a>
-        <a href="{{ path('centers') }}" class="btn btn-primary mt-3">Revenir aux centres</a>
+        <a href="{{ path('editCenter') }}/{{ center.id }}" class="btn btn-primary mt-3">Modifier</a>
+        <a href="{{ path('deleteCenter') }}/{{ center.id }}" class="btn btn-primary mt-3">Supprimer</a>
+        <a href="{{ path('adminCenters') }}" class="btn btn-primary mt-3">Revenir aux centres</a>
     </div>
 </main>
 
