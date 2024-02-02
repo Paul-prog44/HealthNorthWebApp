@@ -87,6 +87,21 @@ class AdminCenterController extends AbstractController
         ]);
     }
 
+    public function updateCenterInformationWithoutPicture(int $centerId)
+    {
+        $this->httpClient->request(
+            'PUT', 'https://127.0.0.1:8000/api/centers/'.$centerId ,[
+            'verify_peer' => false,
+            'verify_host' => false,
+            'json' => [
+                'name' => $_POST['name'],
+                'city' => $_POST['city'],
+                'country' => $_POST['country'],
+                'address' => $_POST['address'],
+                'specialtiesArray' => $_POST['specialties']            ]
+        ]);
+    }
+
     public function fetchSpecialties() 
     {
             $response = $this->httpClient->request(
@@ -196,10 +211,11 @@ class AdminCenterController extends AbstractController
         $specialties = $this->fetchSpecialties();
 
         $currentSpecialties = []; 
-        //On retourne un tableau de tableau, cette fonction sert a filtrer ce tableau
+        //On retourne un tableau de tableau, cette boucle sert a filtrer ce tableau
         foreach ($currentCenter['specialties'] as $specialty ) { 
             $currentSpecialties[] =  $specialty["name"];
         }
+      
         //On récupère les informations déjà présentes pour les passer en valeur à la vue
         return $this->render('editCenter.html.twig', 
             [
@@ -215,6 +231,7 @@ class AdminCenterController extends AbstractController
     #[Route('/admin/confirmationCenterEdition/{centerId}', name : 'confirmationCenterEdition')]
     public function confirmationCenterEdition($centerId = null) : Response
     {
+        //Si une image a été chargée
         if (!$_FILES["imageCenter"]["name"] == "") {
             try {
                 $target_dir = "img/centerImg/";
@@ -263,7 +280,7 @@ class AdminCenterController extends AbstractController
                     return $this->render('errorTemplate.html.twig', ["error" => $e]);
                 }
         } else {
-            $this->updateCenterInformation($centerId);
+            $this->updateCenterInformationWithoutPicture($centerId);
             return $this->render('confirmationCenterEdition.html.twig', ["center" => $_POST]);
         }
     }
