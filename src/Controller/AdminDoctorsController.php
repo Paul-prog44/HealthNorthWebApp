@@ -82,6 +82,16 @@ class AdminDoctorsController extends AbstractController
         ]);
     }
 
+    public function deleteDoctorfct(int $doctorId)
+    {
+            $response = $this->httpClient->request(
+            'DELETE', 'https://127.0.0.1:8000/api/doctors/'.$doctorId, ['verify_peer' => false,
+            'verify_host' => false,]);
+
+            $statusCode = $response->getStatusCode();
+            return $statusCode;
+        }
+
     #[Route('/addDoctor', name : 'addDoctor')]
     public function createCenter() : Response
     {
@@ -116,5 +126,17 @@ class AdminDoctorsController extends AbstractController
     {
         $doctorArray = $this->fetchDoctorList();
         return $this->render('adminDoctors.html.twig', ["doctorArray" => $doctorArray]);
+    }
+
+    #[Route('/admin/deleteDoctor/{doctorId}', name : 'deleteDoctor')]
+    public function deleteDoctor($doctorId = null) : Response
+    {
+        try {
+            $this->deleteDoctorfct($doctorId);
+            return $this->render('confirmationCenterDeletion.html.twig');
+            
+        } catch (Exception $e) {
+            return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        }
     }
 }
