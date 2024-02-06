@@ -93,11 +93,23 @@ class DoctorController extends AbstractController
                 'lastName' => $_POST['lastName'],
                 'firstName' => $_POST['firstName'],
                 'emailAddress' => $_POST['emailAddress'],
-                'centerId' => $_POST['centerId'],
+                'centerId' => $_POST['centerId'], // TODO: fix changement centre
                 'specialtyId' => $_POST['specialtyId']
             ]
         ]);
     }
+        public function deleteDoctorApi(int $doctorId){
+            $response = $this->httpClient->request(
+                'DELETE', 'https://127.0.0.1:8000/api/doctors/'.$doctorId ,
+                ['verify_peer' => false,
+                'verify_host' => false,]);
+    
+            $statusCode = $response->getStatusCode();
+            if ($statusCode === 204 ) {
+                return $this->render('confirmationDoctorDeletion.html.twig');
+            }
+        }
+    
 
 
     #[Route('admin/addDoctor', name : 'addDoctor')]
@@ -149,4 +161,15 @@ class DoctorController extends AbstractController
         $currentDoctor = $this->fetchDoctorList($doctorId);
         return $this->render('confirmationDoctorEdition.html.twig', ["currentDoctor" => $currentDoctor]);
     }
+
+    #[Route('deleteDoctor/{doctorId}', name : 'deleteDoctor')]
+    public function deleteDoctor( $doctorId = null) : Response
+    {
+        try {
+        return $this->deleteDoctorApi($doctorId);
+        } catch (Exception $e) {
+            return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        }
+    }
+
 }

@@ -5,6 +5,9 @@
 {% block body %}
 
 <main>
+    <h3>Ajouter un médecin :
+        <a href="{{ path('addDoctor') }}"><button type="button" class="btn btn-primary mt-3">Ajouter</button></a>
+    </h3>
     <h1>Liste des médecins</h1>
     <ul>
     {% for doctor in doctorArray %}
