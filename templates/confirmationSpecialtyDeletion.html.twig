@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Confirmation de suppression {% endblock %}
+
+{% block body %}
+
+<main class="d-flex align-items-center flex-column">
+    <h3>La spécialité a bien été supprimée de la base de donnée.</h3>
+    <a href="{{ path('specialties') }}"><button type="button" class="btn btn-primary mt-3">Consulter les spécialités</button></a>
+    <a href="{{ path('homepage') }}"><button type="button" class="btn btn-primary mt-3">Revenir à l'accueil</button></a>
+
+</main>
+
+{% endblock %}

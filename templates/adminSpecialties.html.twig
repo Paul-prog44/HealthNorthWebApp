@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Les spécialités {% endblock %}
+
+{% block body %}
+
+<main>
+    <h3>Ajouter une spécialité :
+        <a href="{{ path('addDoctor') }}"><button type="button" class="btn btn-primary mt-3">Ajouter</button></a>
+    </h3>
+    <h1>Liste des spécialités médicales disponibles</h1>
+    <ul>
+    {% for specialty in specialtiesArray %}
+        <li>{{ specialty.name }}</li>
+        <a href="{{ path('deleteSpecialty') }}/{{specialty.id}}"><button type="button" class="btn btn-danger mt-3">Supprimer</button></a>
+        <a href="{{ path('editDoctor') }}/{{specialty.id}}"><button type="button" class="btn btn-primary mt-3">Modifier</button></a>
+    {% endfor %}
+    </ul>
+</main>
+
+{% endblock %}
