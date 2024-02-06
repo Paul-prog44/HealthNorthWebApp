@@ -82,6 +82,7 @@ class DoctorController extends AbstractController
         ]);
     }
 
+
     #[Route('/addDoctor', name : 'addDoctor')]
     public function createCenter() : Response
     {
@@ -110,4 +111,6 @@ class DoctorController extends AbstractController
             return $this->render('missmatchEmailAddress.html.twig');
         }
     }
+
+    
 }
