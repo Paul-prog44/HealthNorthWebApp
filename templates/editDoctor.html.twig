@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Modifier un docteur {% endblock %}
+
+{% block body %}
+
+<main class="d-flex align-items-center flex-column">
+    <h2>Modifier un docteur</h2>
+    <form action="{{ path('confirmationDoctorEdition') }}/{{ currentDoctor.id }}" method="POST">
+                <p>Genre :</p>
+                <div>
+                    <input type="radio" id="gender" name="gender" value="Madame" checked />
+                    <label for="Madame">Madame</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="gender" name="gender" value="Monsieur" />
+                    <label for="Monsieur">Monsieur</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="gender" name="gender" value="Autre" />
+                    <label for="Autre">Autre</label>
+                </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="firstName" >Prénom :</label></span>
+                <input name="firstName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ currentDoctor.firstName}}">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="lastName">Nom de famille :</label></span>
+                <input name="lastName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ currentDoctor.lastName }}">
+            </div>
+             <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="emailAddress" >Adresse électronique :</label></span>
+                <input name="emailAddress" type="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ currentDoctor.emailAddress }}">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="emailAddressConfirmation" >Confirmation adresse électronique :</label></span>
+                <input name="emailAddressConfirmation" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ currentDoctor.emailAddress }}">
+            </div>
+            <div class="form-group row">
+                <label for="centerId" class="col-5 col-form-label">Choisir un centre :</label> 
+                <div class="col-8">
+                    <select id="centerId" name="centerId" class="custom-select">
+                        {% for center in centers %}
+                        <option value="{{ center.id }}">{{ center.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="specialtyId" class="col-5 col-form-label">Choisir une spécialité :</label> 
+                <div class="col-8">
+                    <select id="specialtyId" name="specialtyId" class="custom-select">
+                        {% for specialty in specialties %}
+                        <option value="{{ specialty.id }}">{{ specialty.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>  
+            <div>
+                <button type="submit" class="btn btn-primary mt-3">Modifier</button>
+            </div>
+            <div>
+                <a href="{{ path('homepage') }}"><button type="button" class="btn btn-primary mt-3">Annuler</button></a>
+        </div>
+    </form>
+</main>
+
+{% endblock %}

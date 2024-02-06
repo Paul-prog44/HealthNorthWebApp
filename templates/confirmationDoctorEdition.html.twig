@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Confirmation de modification {% endblock %}
+
+{% block body %}
+
+<main class="d-flex align-items-center flex-column">
+    <h3>Le centre {{ currentDoctor.lastName }} a bien été modifié.</h3>
+    <a href="{{ path('adminDoctors') }}"><button type="button" class="btn btn-primary mt-3">Modifier un autre docteur</button></a>
+    <a href="{{ path('homepage') }}"><button type="button" class="btn btn-primary mt-3">Revenir à l'accueil</button></a>
+
+</main>
+
+{% endblock %}

@@ -28,11 +28,11 @@ class DoctorController extends AbstractController
         return $content;
 
     }
-
-    public function fetchDoctorList() : array 
+    //So !doctorId, alors valeur null, sinon on recherche l'id correspondante
+    public function fetchDoctorList($doctorId = null) : array 
     {
         $response = $this->httpClient->request(
-            'GET', 'https://127.0.0.1:8000/api/doctors',['verify_peer' => false,
+            'GET', 'https://127.0.0.1:8000/api/doctors/'.$doctorId ,['verify_peer' => false,
             'verify_host' => false,]);
 
         $content = $response->getContent();
@@ -82,8 +82,25 @@ class DoctorController extends AbstractController
         ]);
     }
 
+    public function postEditDoctor(int $doctorId)
+    {
+        $this->httpClient->request(
+            'PUT', 'https://127.0.0.1:8000/api/doctors/'.$doctorId ,[
+            'verify_peer' => false,
+            'verify_host' => false,
+            'json' => [
+                'gender' => $_POST['gender'],
+                'lastName' => $_POST['lastName'],
+                'firstName' => $_POST['firstName'],
+                'emailAddress' => $_POST['emailAddress'],
+                'centerId' => $_POST['centerId'],
+                'specialtyId' => $_POST['specialtyId']
+            ]
+        ]);
+    }
 
-    #[Route('/addDoctor', name : 'addDoctor')]
+
+    #[Route('admin/addDoctor', name : 'addDoctor')]
     public function createCenter() : Response
     {
         $centers = $this->fetchApiCentersData();
@@ -94,7 +111,7 @@ class DoctorController extends AbstractController
         ]);
     }
 
-    #[Route('/confirmationDoctorCreation', name : 'confirmationDoctorCreation')]
+    #[Route('admin/confirmationDoctorCreation', name : 'confirmationDoctorCreation')]
     public function confirmationDoctorCreation() : Response
     {
         if ($_POST["emailAddress"] == $_POST["emailAddressConfirmation"])
@@ -112,5 +129,24 @@ class DoctorController extends AbstractController
         }
     }
 
-    
+    #[Route('admin/editDoctor/{doctorId}', name : 'editDoctor')]
+    public function editDoctor($doctorId = null) : Response
+    {
+        $centers = $this->fetchApiCentersData();
+        $specialties = $this->fetchSpecialties();
+        $currentDoctor = $this->fetchDoctorList($doctorId);
+        return $this->render('editDoctor.html.twig', [
+            "centers" => $centers,
+            "specialties" => $specialties,
+            "currentDoctor" => $currentDoctor
+        ]);
+    }
+
+    #[Route('confirmationDoctorEdition/{doctorId}', name : 'confirmationDoctorEdition')]
+    public function confirmationDoctorEdition($doctorId= null) : Response
+    {
+        $this->postEditDoctor($doctorId);
+        $currentDoctor = $this->fetchDoctorList($doctorId);
+        return $this->render('confirmationDoctorEdition.html.twig', ["currentDoctor" => $currentDoctor]);
+    }
 }

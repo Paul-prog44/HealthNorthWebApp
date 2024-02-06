@@ -9,8 +9,8 @@
     <ul>
     {% for doctor in doctorArray %}
         <li>{{doctor.gender}} - {{doctor.firstName}} - {{doctor.lastName}} - {{doctor.lastName}} - {{doctor.emailAddress}} - {{doctor.center.name}}</li>
-        <a href="{{ path('deleteDoctor') }}/{{ doctor.id }}"><button type="button" class="btn btn-secondary mt-3">Annuler</button></a>
-
+        <a href="{{ path('deleteDoctor') }}/{{ doctor.id }}"><button type="button" class="btn btn-danger mt-3">Supprimer</button></a>
+        <a href="{{ path('editDoctor') }}/{{ doctor.id }}"><button type="button" class="btn btn-primary mt-3">Modifier</button></a>
     {% endfor %}
     </ul>
 </main>
