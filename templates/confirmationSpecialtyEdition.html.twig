@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Confirmation de modification {% endblock %}
+
+{% block body %}
+
+<main class="d-flex align-items-center flex-column">
+    <h3>La spécialité {{ currentSpecialty.name }} a bien été modifiée.</h3>
+    <a href="{{ path('specialties') }}"><button type="button" class="btn btn-primary mt-3">Modifier une autre spécialité</button></a>
+    <a href="{{ path('homepage') }}"><button type="button" class="btn btn-primary mt-3">Revenir à l'accueil</button></a>
+
+</main>
+
+{% endblock %}

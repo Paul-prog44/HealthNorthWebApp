@@ -13,7 +13,7 @@
     {% for specialty in specialtiesArray %}
         <li>{{ specialty.name }}</li>
         <a href="{{ path('deleteSpecialty') }}/{{specialty.id}}"><button type="button" class="btn btn-danger mt-3">Supprimer</button></a>
-        <a href="{{ path('editDoctor') }}/{{specialty.id}}"><button type="button" class="btn btn-primary mt-3">Modifier</button></a>
+        <a href="{{ path('editSpecialty') }}/{{specialty.id}}"><button type="button" class="btn btn-primary mt-3">Modifier</button></a>
     {% endfor %}
     </ul>
 </main>
