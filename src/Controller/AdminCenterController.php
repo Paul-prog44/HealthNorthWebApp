@@ -98,7 +98,8 @@ class AdminCenterController extends AbstractController
                 'city' => $_POST['city'],
                 'country' => $_POST['country'],
                 'address' => $_POST['address'],
-                'specialtiesArray' => $_POST['specialties']            ]
+                'specialtiesArray' => $_POST['specialties']
+                ]
         ]);
     }
 
@@ -208,19 +209,18 @@ class AdminCenterController extends AbstractController
     {
         try {
         $currentCenter = $this->fetchCenterInformation($centerId);
-        $specialties = $this->fetchSpecialties();
+        $allSpecialties = $this->fetchSpecialties();
 
         $currentSpecialties = []; 
         //On retourne un tableau de tableau, cette boucle sert a filtrer ce tableau
         foreach ($currentCenter['specialties'] as $specialty ) { 
             $currentSpecialties[] =  $specialty["name"];
         }
-      
         //On récupère les informations déjà présentes pour les passer en valeur à la vue
         return $this->render('editCenter.html.twig', 
             [
             "currentCenter" => $currentCenter, 
-            "specialties" => $specialties,
+            "specialties" => $allSpecialties,
             "currentSpecialties" => $currentSpecialties
             ]);
         } catch (Exception $e) {
