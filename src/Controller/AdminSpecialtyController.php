@@ -53,6 +53,19 @@ class AdminSpecialtyController extends AbstractController
         ]);
     }
 
+    public function postSpecialty()
+    {
+        $this->httpClient->request(
+            'POST', 'https://127.0.0.1:8000/api/specialties' ,[
+                'verify_peer' => false,
+                'verify_host' => false,
+                'json' => [
+                    'name' => $_POST['name'],
+                    'centerId' => $_POST['centerId']
+                ]
+            ]);
+    }
+
 
     #[Route ('admin/specialties', name : 'specialties')]
     public function getSpecialties() : Response
@@ -90,6 +103,26 @@ class AdminSpecialtyController extends AbstractController
         $currentSpecialty = $this->fetchSpecialty($specialtyId);
         return $this->render('confirmationSpecialtyEdition.html.twig', ["currentSpecialty" => $currentSpecialty]);
 
+    }
+
+    #[Route('admin/addSpecialty', name : 'addSpecialty')]
+    public function addSpecialty(CenterController $centerController) : Response
+    {
+        
+        $centers = $centerController->fetchApiCentersData();
+        // $specialties = $this->fetchSpecialties();
+        return $this->render('addSpecialty.html.twig', ['centers' => $centers]);
+    }
+
+    #[Route('admin/confirmationSpecialtyCreation', name : 'confirmationSpecialtyCreation')]
+    public function confirmationSpecialtyCreation() : Response
+    {
+        try {
+            $this->postSpecialty();
+            return $this->render('confirmationSpecialtyCreation.html.twig');
+        } catch (Exception $e) {
+            return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        }
     }
 
 }

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Ajouter un docteur {% endblock %}
+
+{% block body %}
+
+<main class="d-flex align-items-center flex-column">
+    <h2>Ajouter une spécialité médicale</h2>
+    <form action="{{ path('confirmationSpecialtyCreation')}}" method="POST">
+                
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="name" >Nom de la spécialité :</label></span>
+                <input name="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <label for="name" >A quel centre souhaitez-vous l'ajouter ?</label>
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="centerId" id="centerId">
+            {% for center in centers %}
+                <option value="{{ center.id }}" >{{ center.name }}</option>
+            {% endfor %}   
+            </select>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary mt-3">Ajouter</button>
+            </div>
+            <div>
+                <a href="{{ path('centers') }}"><button type="button" class="btn btn-primary mt-3">Annuler</button></a>
+        </div>
+    </form>
+</main>
+
+{% endblock %}

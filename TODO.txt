@@ -6,3 +6,4 @@
 - Gérer les réservations
 - Réinitialiser les spécialités avant d'envoyer la nouvelle liste !
 - Faire un template de confirmation de suppression de médecin
+- Vérifier la route addDoctor
