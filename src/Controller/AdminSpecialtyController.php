@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use function PHPUnit\Framework\throwException;
+
 class AdminSpecialtyController extends AbstractController 
 {
     private $httpClient;
@@ -118,6 +120,10 @@ class AdminSpecialtyController extends AbstractController
     public function confirmationSpecialtyCreation() : Response
     {
         try {
+            if ($_POST['name'] === "") {
+                return $this->render('errorTemplate.html.twig', 
+                ["error" => "Vous devez choisir un nom pour cette spécialité"]);
+            }
             $this->postSpecialty();
             return $this->render('confirmationSpecialtyCreation.html.twig');
         } catch (Exception $e) {
