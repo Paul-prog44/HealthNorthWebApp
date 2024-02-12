@@ -65,15 +65,6 @@ class DoctorController extends AbstractController
         return $content;
     }
 
-    #[Route('admin/addDoctor', name : 'addDoctor')]
-    public function createCenter() : Response
-    {
-        $centers = $this->fetchApiCentersData();
-        $specialties = $this->fetchSpecialties();
-        return $this->render('addDoctor.html.twig', [
-            "centers" => $centers, 
-            "specialties" => $specialties
-        ]);
-    }
+    
 
 }

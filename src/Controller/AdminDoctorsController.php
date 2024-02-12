@@ -114,7 +114,7 @@ class AdminDoctorsController extends AbstractController
     {
         $centers = $this->fetchApiCentersData();
         $specialties = $this->fetchSpecialties();
-        return $this->render('addDoctor.html.twig', [
+        return $this->render('creation/addDoctor.html.twig', [
             "centers" => $centers, 
             "specialties" => $specialties
         ]);
@@ -127,7 +127,7 @@ class AdminDoctorsController extends AbstractController
         {
             try {
                 $this->postDoctorInformation();
-                return $this->render('confirmationDoctorCreated.html.twig', ["doctor" => $_POST]
+                return $this->render('confirmation/confirmationDoctorCreated.html.twig', ["doctor" => $_POST]
             );
             } catch (Exception $e) {
                 return $this->render('errorTemplate.html.twig', ["error" => $e]);
@@ -142,7 +142,7 @@ class AdminDoctorsController extends AbstractController
     public function adminDoctors() : Response
     {
         $doctorArray = $this->fetchDoctorList();
-        return $this->render('adminDoctors.html.twig', ["doctorArray" => $doctorArray]);
+        return $this->render('admin/adminDoctors.html.twig', ["doctorArray" => $doctorArray]);
     }
 
     #[Route('/admin/deleteDoctor/{doctorId}', name : 'deleteDoctor')]

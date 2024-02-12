@@ -74,7 +74,7 @@ class AdminSpecialtyController extends AbstractController
     {   
         try {
         $specialtiesArray = $this->fetchSpecialty();
-        return $this->render('adminSpecialties.html.twig', ['specialtiesArray' => $specialtiesArray]);
+        return $this->render('admin/adminSpecialties.html.twig', ['specialtiesArray' => $specialtiesArray]);
 
         } catch(Exception $e) {
             return $this->render('errorTemplate.html.twig', ["error" => $e]);
@@ -113,7 +113,7 @@ class AdminSpecialtyController extends AbstractController
         
         $centers = $centerController->fetchApiCentersData();
         // $specialties = $this->fetchSpecialties();
-        return $this->render('addSpecialty.html.twig', ['centers' => $centers]);
+        return $this->render('creation/addSpecialty.html.twig', ['centers' => $centers]);
     }
 
     #[Route('admin/confirmationSpecialtyCreation', name : 'confirmationSpecialtyCreation')]

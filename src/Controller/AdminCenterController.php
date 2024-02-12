@@ -121,11 +121,11 @@ class AdminCenterController extends AbstractController
     {
         if ($slug) {
             $center = $this->fetchCenterInformation($slug); //recupère un centre en fonction de son id
-            return $this->render('adminCenter.html.twig',
+            return $this->render('admin/adminCenter.html.twig',
             ["center" => $center]); //On passe le centre à la vue
         } else {
             $centers = $this->fetchApiCentersData(); //
-            return $this->render('adminCenters.html.twig',
+            return $this->render('admin/adminCenters.html.twig',
             ["centers" => $centers]);
         }
     }
@@ -134,7 +134,7 @@ class AdminCenterController extends AbstractController
     public function createDoctor() : Response
     {
         $specialties = $this->fetchSpecialties();
-        return $this->render('addCenter.html.twig', [
+        return $this->render('creation/addCenter.html.twig', [
             "specialties" => $specialties
         ]);
     }
@@ -217,7 +217,7 @@ class AdminCenterController extends AbstractController
             $currentSpecialties[] =  $specialty["name"];
         }
         //On récupère les informations déjà présentes pour les passer en valeur à la vue
-        return $this->render('editCenter.html.twig', 
+        return $this->render('edit/editCenter.html.twig', 
             [
             "currentCenter" => $currentCenter, 
             "specialties" => $allSpecialties,
@@ -269,7 +269,7 @@ class AdminCenterController extends AbstractController
                 } else {
                     if (move_uploaded_file($_FILES["imageCenter"]["tmp_name"], $target_file)) {
                         $this->updateCenterInformation($centerId);
-                        return $this->render('confirmationCenterEdition.html.twig', ["center" => $_POST]);
+                        return $this->render('confirmation/confirmationCenterEdition.html.twig', ["center" => $_POST]);
                     } else {
                         return $this->render('errorTemplate.html.twig',
                         ["error" => "Une erreur est survenue lors du téléchargement du fichier"]);

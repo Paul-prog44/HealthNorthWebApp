@@ -19,13 +19,13 @@ class AdminController extends AbstractController
     #[Route('/admin', name : 'admin')]
     public function adminMenu() : Response
     {
-        return $this->render('admin.html.twig');
+        return $this->render('admin/admin.html.twig');
     }
 
-    #[Route('admin/doctors', name: 'adminDoctors')]
+    #[Route('admin/Doctors', name: 'adminDoctors')]
     public function adminDoctors() : Response
     {
-        return $this->render('adminDoctors.html.twig');
+        return $this->render('admin/adminDoctors.html.twig');
     }
     
 }

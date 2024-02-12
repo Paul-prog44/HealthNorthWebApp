@@ -51,7 +51,7 @@ class ReservationController extends AbstractController
     #[Route('/reservationConfirmation', name : 'reservationConfirmation')]
     public function reservationCreation() : Response
     {
-        return $this->render('reservationConfirmation.html.twig');
+        return $this->render('confirmation/reservationConfirmation.html.twig');
     }
 
 }
