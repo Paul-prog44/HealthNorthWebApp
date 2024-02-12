@@ -50,6 +50,8 @@ class Authentication extends AbstractController
             }
             else if ($result[0]['password'] === $password) {
                 //Mise en session de l'utilisateur
+
+                $session->set('isLogged', true);
                 $session->set('id', $result[0]['id']);
                 $session->set('medical_file_id', $result[0]['medical_file_id']);
                 $session->set('gender', $result[0]['gender']);
@@ -67,7 +69,8 @@ class Authentication extends AbstractController
         } catch (Exception $e) 
         {
             return $this->render('errorTemplate.html.twig', ["error" => $e]);
-        }    }
+        }    
+    }
 
     
     #[Route('/userAccount', name : 'userAccount')]
