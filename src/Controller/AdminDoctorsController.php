@@ -90,7 +90,24 @@ class AdminDoctorsController extends AbstractController
 
             $statusCode = $response->getStatusCode();
             return $statusCode;
-        }
+    }
+
+    public function postEditDoctor(int $doctorId)
+    {
+        $this->httpClient->request(
+            'PUT', 'https://127.0.0.1:8000/api/doctors/'.$doctorId ,[
+            'verify_peer' => false,
+            'verify_host' => false,
+            'json' => [
+                'gender' => $_POST['gender'],
+                'lastName' => $_POST['lastName'],
+                'firstName' => $_POST['firstName'],
+                'emailAddress' => $_POST['emailAddress'],
+                'centerId' => $_POST['centerId'], // TODO: fix changement centre
+                'specialtyId' => $_POST['specialtyId']
+            ]
+        ]);
+    }
 
     #[Route('/addDoctor', name : 'addDoctor')]
     public function createCenter() : Response
@@ -132,11 +149,34 @@ class AdminDoctorsController extends AbstractController
     public function deleteDoctor($doctorId = null) : Response
     {
         try {
-            $this->deleteDoctorfct($doctorId);
-            return $this->render('confirmationCenterDeletion.html.twig');
-            
+            if ($this->deleteDoctorfct($doctorId) === 204)
+            {
+                return $this->render('confirmation/confirmationDoctorDeletion.html.twig');
+            }
         } catch (Exception $e) {
             return $this->render('errorTemplate.html.twig', ["error" => $e]);
         }
     }
+
+    #[Route('admin/editDoctor/{doctorId}', name : 'editDoctor')]
+    public function editDoctor($doctorId = null) : Response
+    {
+        $centers = $this->fetchApiCentersData();
+        $specialties = $this->fetchSpecialties();
+        $currentDoctor = $this->fetchDoctorList($doctorId);
+        return $this->render('edit/editDoctor.html.twig', [
+            "centers" => $centers,
+            "specialties" => $specialties,
+            "currentDoctor" => $currentDoctor
+        ]);
+    }
+
+    #[Route('confirmationDoctorEdition/{doctorId}', name : 'confirmationDoctorEdition')]
+    public function confirmationDoctorEdition($doctorId= null) : Response
+    {
+        $this->postEditDoctor($doctorId);
+        $currentDoctor = $this->fetchDoctorList($doctorId);
+        return $this->render('confirmation/confirmationDoctorEdition.html.twig', ["currentDoctor" => $currentDoctor]);
+    }
+
 }

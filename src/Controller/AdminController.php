@@ -23,7 +23,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('admin/doctors', name: 'adminDoctors')]
-    public function admonDoctors() : Response
+    public function adminDoctors() : Response
     {
         return $this->render('adminDoctors.html.twig');
     }

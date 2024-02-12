@@ -49,7 +49,7 @@ class AdminCenterController extends AbstractController
 
         $statusCode = $response->getStatusCode();
         if ($statusCode === 204 ) {
-            return $this->render('confirmationCenterDeletion.html.twig');
+            return $this->render('confirmation/confirmationCenterDeletion.html.twig');
         }
     }
 
@@ -183,7 +183,7 @@ class AdminCenterController extends AbstractController
                 } else {
                     if (move_uploaded_file($_FILES["imageCenter"]["tmp_name"], $target_file)) {
                         $this->postCenterInformation();
-                        return $this->render('confirmationCenterCreation.html.twig', ["center" => $_POST]);
+                        return $this->render('confirmation/confirmationCenterCreation.html.twig', ["center" => $_POST]);
                     } else {
                         return $this->render('errorTemplate.html.twig',
                         ["error" => "Une erreur est survenue lors du téléchargement du fichier"]);
@@ -281,7 +281,7 @@ class AdminCenterController extends AbstractController
                 }
         } else {
             $this->updateCenterInformationWithoutPicture($centerId);
-            return $this->render('confirmationCenterEdition.html.twig', ["center" => $_POST]);
+            return $this->render('confirmation/confirmationCenterEdition.html.twig', ["center" => $_POST]);
         }
     }
         

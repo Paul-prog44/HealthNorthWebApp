@@ -61,7 +61,7 @@ class HomepageController extends AbstractController
     {
         try {
             $this->postPatientInformation();
-            return $this->render('confirmationAccountCreation.html.twig');
+            return $this->render('confirmation/confirmationAccountCreation.html.twig');
         } catch (Exception $e) {
             return $this->render('errorTemplate.html.twig', ["error" => $e]);
         }

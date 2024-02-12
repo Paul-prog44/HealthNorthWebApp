@@ -65,53 +65,6 @@ class DoctorController extends AbstractController
         return $content;
     }
 
-    public function postDoctorInformation()
-    {
-        $this->httpClient->request(
-            'POST', 'https://127.0.0.1:8000/api/doctors' ,[
-            'verify_peer' => false,
-            'verify_host' => false,
-            'json' => [
-                'gender' => $_POST['gender'],
-                'lastName' => $_POST['lastName'],
-                'firstName' => $_POST['firstName'],
-                'emailAddress' => $_POST['emailAddress'],
-                'centerId' => $_POST['centerId'],
-                'specialtyId' => $_POST['specialtyId']
-            ]
-        ]);
-    }
-
-    public function postEditDoctor(int $doctorId)
-    {
-        $this->httpClient->request(
-            'PUT', 'https://127.0.0.1:8000/api/doctors/'.$doctorId ,[
-            'verify_peer' => false,
-            'verify_host' => false,
-            'json' => [
-                'gender' => $_POST['gender'],
-                'lastName' => $_POST['lastName'],
-                'firstName' => $_POST['firstName'],
-                'emailAddress' => $_POST['emailAddress'],
-                'centerId' => $_POST['centerId'], // TODO: fix changement centre
-                'specialtyId' => $_POST['specialtyId']
-            ]
-        ]);
-    }
-        public function deleteDoctorApi(int $doctorId){
-            $response = $this->httpClient->request(
-                'DELETE', 'https://127.0.0.1:8000/api/doctors/'.$doctorId ,
-                ['verify_peer' => false,
-                'verify_host' => false,]);
-    
-            $statusCode = $response->getStatusCode();
-            if ($statusCode === 204 ) {
-                return $this->render('confirmationDoctorDeletion.html.twig');
-            }
-        }
-    
-
-
     #[Route('admin/addDoctor', name : 'addDoctor')]
     public function createCenter() : Response
     {
@@ -121,55 +74,6 @@ class DoctorController extends AbstractController
             "centers" => $centers, 
             "specialties" => $specialties
         ]);
-    }
-
-    #[Route('admin/confirmationDoctorCreation', name : 'confirmationDoctorCreation')]
-    public function confirmationDoctorCreation() : Response
-    {
-        if ($_POST["emailAddress"] == $_POST["emailAddressConfirmation"])
-        {
-            try {
-                $this->postDoctorInformation();
-                return $this->render('confirmationDoctorCreated.html.twig', ["doctor" => $_POST]
-            );
-            } catch (Exception $e) {
-                return $this->render('errorTemplate.html.twig', ["error" => $e]);
-            }
-        } else 
-        {
-            return $this->render('missmatchEmailAddress.html.twig');
-        }
-    }
-
-    #[Route('admin/editDoctor/{doctorId}', name : 'editDoctor')]
-    public function editDoctor($doctorId = null) : Response
-    {
-        $centers = $this->fetchApiCentersData();
-        $specialties = $this->fetchSpecialties();
-        $currentDoctor = $this->fetchDoctorList($doctorId);
-        return $this->render('editDoctor.html.twig', [
-            "centers" => $centers,
-            "specialties" => $specialties,
-            "currentDoctor" => $currentDoctor
-        ]);
-    }
-
-    #[Route('confirmationDoctorEdition/{doctorId}', name : 'confirmationDoctorEdition')]
-    public function confirmationDoctorEdition($doctorId= null) : Response
-    {
-        $this->postEditDoctor($doctorId);
-        $currentDoctor = $this->fetchDoctorList($doctorId);
-        return $this->render('confirmationDoctorEdition.html.twig', ["currentDoctor" => $currentDoctor]);
-    }
-
-    #[Route('deleteDoctor/{doctorId}', name : 'deleteDoctor')]
-    public function deleteDoctor( $doctorId = null) : Response
-    {
-        try {
-        return $this->deleteDoctorApi($doctorId);
-        } catch (Exception $e) {
-            return $this->render('errorTemplate.html.twig', ["error" => $e]);
-        }
     }
 
 }

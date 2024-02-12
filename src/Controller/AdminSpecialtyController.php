@@ -39,7 +39,7 @@ class AdminSpecialtyController extends AbstractController
 
         $statusCode = $response->getStatusCode();
         if ($statusCode === 204 ) {
-            return $this->render('confirmationSpecialtyDeletion.html.twig');
+            return $this->render('confirmation/confirmationSpecialtyDeletion.html.twig');
         }
     }
 
@@ -95,7 +95,7 @@ class AdminSpecialtyController extends AbstractController
     public function editSpecialty($specialtyId = null) : Response
     {
         $currentSpecialty = $this->fetchSpecialty($specialtyId);
-        return $this->render('editSpecialty.html.twig', ['specialty' => $currentSpecialty]); 
+        return $this->render('edit/editSpecialty.html.twig', ['specialty' => $currentSpecialty]); 
     }
 
     #[Route('admin/confirmationEditSpecialty/{specialtyId}', name : 'confirmationEditSpecialty' )]
@@ -103,7 +103,7 @@ class AdminSpecialtyController extends AbstractController
     {
         $this->editSpecialtyApi($specialtyId);
         $currentSpecialty = $this->fetchSpecialty($specialtyId);
-        return $this->render('confirmationSpecialtyEdition.html.twig', ["currentSpecialty" => $currentSpecialty]);
+        return $this->render('confirmation/confirmationSpecialtyEdition.html.twig', ["currentSpecialty" => $currentSpecialty]);
 
     }
 
@@ -125,7 +125,7 @@ class AdminSpecialtyController extends AbstractController
                 ["error" => "Vous devez choisir un nom pour cette spécialité"]);
             }
             $this->postSpecialty();
-            return $this->render('confirmationSpecialtyCreation.html.twig');
+            return $this->render('confirmation/confirmationSpecialtyCreation.html.twig');
         } catch (Exception $e) {
             return $this->render('errorTemplate.html.twig', ["error" => $e]);
         }
