@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Authentification réussie {% endblock %}
+
+{% block body %}
+<main>
+    <div class="presentationCentre">
+        <h1>Merci de vous être identifié</h1>
+        <a href="{{ path('homepage') }}" class="btn btn-primary mt-3">Revenir à l'accueil</a>
+    </div>
+</main>
+
+{% endblock %}

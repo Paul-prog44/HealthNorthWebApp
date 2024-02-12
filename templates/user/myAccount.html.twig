@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Votre compte {% endblock %}
+
+{% block body %}
+<main>
+    <div class="presentationCentre">
+        <h1>Votre espace personnel</h1>
+        <p>Votre adresse email<p>
+        <a href="{{ path('homepage') }}" class="btn btn-primary mt-5">Revenir à l'accueil</a>
+    </div>
+</main>
+
+{% endblock %}

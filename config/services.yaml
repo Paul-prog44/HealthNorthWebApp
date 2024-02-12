@@ -20,5 +20,11 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Service\DatabaseService:
+        arguments:
+            $dsn: 'mysql:host=127.0.0.1:3306;dbname=north_health'
+            $username: 'NorthHealthWebApp'
+            $password: ''
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

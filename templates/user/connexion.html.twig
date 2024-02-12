@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Se connecter {% endblock %}
+
+{% block body %}
+<main>
+    <div class="presentationCentre">
+        <h1>Identification</h1>
+        <form action="{{ path('loggin') }}" method="POST">
+            <div class="form-group">
+                <label for="emailAddress">Votre adresse électronique</label>
+                <input type="email" class="form-control" id="emailAddress"name="emailAddress" aria-describedby="emailHelp" placeholder="Votre email" required>
+                <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre adresse email.</small>
+            </div>
+                <div class="form-group">
+                <label for="exampleInputPassword1">Mot de passe</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Se connecter</button>
+        </form>
+        <a href="{{ path('homepage') }}" class="btn btn-primary mt-5">Revenir à l'accueil</a>
+    </div>
+</main>
+
+{% endblock %}
