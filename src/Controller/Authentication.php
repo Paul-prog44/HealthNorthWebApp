@@ -72,11 +72,4 @@ class Authentication extends AbstractController
         }    
     }
 
-    
-    #[Route('/userAccount', name : 'userAccount')]
-    public function userAccount(Request $request) : Response
-    {
-        return $this->render('user/myAccount.html.twig');
-    }
- 
 }

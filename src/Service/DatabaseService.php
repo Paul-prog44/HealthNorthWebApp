@@ -1,7 +1,7 @@
 <?php 
 
 namespace App\Service;
-
+//Accès à la DB, le paramétrage se fait dans config/services.yaml
 class DatabaseService
 {
     private $pdo;

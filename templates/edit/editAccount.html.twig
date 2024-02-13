@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Votre compte  {% endblock %}
+
+{% block body %}
+{# Récupération de la variable de session #}
+{% set sessionData = app.session.all() %} 
+
+<main class="d-flex align-items-center flex-column">
+    <h2>Modifier vos informations personnelles</h2>
+    <form action="" method="POST">
+                
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="genre" >Civilité :</label></span>
+                <input name="genre" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ sessionData.gender  }}">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="city">Prénom :</label></span>
+                <input name="firstName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ sessionData.first_name }}">
+            </div>
+             <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="country" >Nom de famille :</label></span>
+                <input name="lastName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ sessionData.last_name }}">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="address" >Adresse :</label></span>
+                <input name="address" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ sessionData.address }}">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="address" >Adresse électronique :</label></span>
+                <input name="emailAddress" type="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ sessionData.email_address }}">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="address" >Numéro de sécurité sociale :</label></span>
+                <input name="socialSecurityNumber" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ sessionData.social_security }}">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="address" >Ancien mot de passe :</label></span>
+                <input name="oldPassword" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="{{ sessionData.password }}">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><label for="address" >Nouveau mot de passe :</label></span>
+                <input name="newPassword" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+            </div>
+            <div>
+                <a href="{{ path('userAccount') }}"><button type="button" class="btn btn-primary mt-3">Annuler</button></a>
+            </div>
+    </form>
+</main>
+
+{% endblock %}
