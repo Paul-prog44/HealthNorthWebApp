@@ -110,5 +110,13 @@ class UserController extends AbstractController
             return $this->render('errorTemplate.html.twig', ["error" => "Le mot de passe que vous avez fourni ne correspond pas."]);
         }
     }
+
+    #[Route('logout', name :'logout')]
+    public function logout(Request $request) : Response
+    {
+        $session = $request->getSession();
+        $session->invalidate();
+        return $this->render('user/logout.html.twig');
+    }
  
 }
