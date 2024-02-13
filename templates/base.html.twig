@@ -14,9 +14,11 @@
         {% block javascripts %}
 {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
+        {% set sessionData = app.session.all() %} 
+
     </head>
     <body data-turbo="false">
-    <header class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+    <header class="navbar navbar-expand-lg bg-body-tertiary justify-content-between sticky-top">
         <div class="container-fluid">
             <img src="/img/Logo.png" alt="Logo de North Health">
             <a class="navbar-brand" href="{{ path('homepage') }}">North Health</a>
@@ -34,14 +36,20 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="#">Contact</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ path('connexion') }} ">Se connecter</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ path('userAccount') }} ">Votre compte</a>
-                    </li>
                 </ul>
             </div>
+        </div>
+        <div>
+            {% if sessionData %}
+            <div class="d-flex">
+                <img src="/img/user-solid.svg" alt="logo compte" class="logoReseau"></img>
+                <a class="nav-link active" href="{{ path('userAccount') }} " style="margin-left : 10px">{{ sessionData.first_name }} {{ sessionData.last_name }}</a>
+            </div>
+            {% else %}
+                <div class="d-flex">
+                    <a class="nav-link active" href="{{ path('connexion') }} ">Se connecter</a>
+                </div>
+            {% endif %}
         </div>
     </header>
         {% block body %}{% endblock %}

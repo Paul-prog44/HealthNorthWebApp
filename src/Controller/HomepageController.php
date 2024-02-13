@@ -39,8 +39,14 @@ class HomepageController extends AbstractController
 
 
     #[Route('/', name: 'homepage')]
-    public function homepage(): Response
+    public function homepage(Request $request): Response
     {
+        $session = $request->getSession();
+        if ($session->get('isLogged'== null)) {
+            $session->set('isLogged', false);
+        }
+        
+
         return $this->render('homepage.html.twig');
     }
 
