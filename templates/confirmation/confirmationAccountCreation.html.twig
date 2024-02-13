@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} | Confirmation de réservation {% endblock %}
+{% block title %}{{ parent() }} | Confirmation de modification {% endblock %}
 
 {% block body %}
 
 <main class="d-flex align-items-center">
-    <h2>Votre compte à bien été créé, vous recevrez un email de confirmation d'ici quelques minutes.</h2>
+    <h2>Les modifications ont bien été enregistrées.</h2>
+    <a href="{{ path('userAccount') }}"><button type="button" class="btn btn-primary mt-3">Votre compte</button></a>
+    <a href="{{ path('homepage') }}"><button type="button" class="btn btn-primary mt-3">Accueil</button></a>
 </main>
 
 {% endblock %}

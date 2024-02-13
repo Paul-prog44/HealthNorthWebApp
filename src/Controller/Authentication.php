@@ -59,7 +59,6 @@ class Authentication extends AbstractController
                 $session->set('first_name', $result[0]['first_name']);
                 $session->set('address', $result[0]['address']);
                 $session->set('email_address', $result[0]['email_address']);
-                $session->set('password', $result[0]['password']);
                 $session->set('social_security', $result[0]['social_security']);
 
                 return $this->render('user/connexionSuccess.html.twig');
