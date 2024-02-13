@@ -6,39 +6,55 @@
 <main>
     <div class="reservation">
       <form action="{{path ('reservationConfirmation') }}">
+
+        {# Choix de la spé médicale #}
         <div class="form-group row">
           <label for="medicalField" class="col-4 col-form-label">Spécialités</label> 
           <div class="col-8">
             <select id="medicalField" name="medicalField" class="custom-select">
               {% for specialty in center.specialties %}
-              <option value="{{specialty.name }}">{{ specialty.name }}</option> {# Affichage dynamique des spécialités #}
+                <option value="{{specialty.name }}">{{ specialty.name }}</option> {# Affichage dynamique des spécialités #}
               {% endfor %}
             </select>
           </div>
         </div>
+
+        {# Choix du docteur #}
         <div class="form-group row">
           <label for="choosenDoctor" class="col-4 col-form-label">Docteur</label> 
           <div class="col-8">
             <select id="choosenDoctor" name="choosenDoctor" class="custom-select">
               {% for doctor in doctors | filter(doctor => doctor.center.name == center.name ) %} {#Si un docteur n'a pas de centre attribué = crash #}
-              <option value="{{ doctor.lastName }}">{{ doctor.lastName }}</option>
+                <option value="{{ doctor.lastName }}">{{ doctor.lastName }}</option>
               {% endfor %}
             </select>
           </div>
         </div>
+
+        {# Choix de la date #}
         <div class="form-group row">
-          <label for="interventionDate" class="col-4 col-form-label">Date et heure</label> 
+          <label for="interventionDate" class="col-4 col-form-label">Date</label> 
           <div class="col-8">
-            <input id="interventionDate" name="interventionDate" type="text" class="form-control">
+            <input id="interventionDate" name="interventionDate" type="date" class="form-control">
           </div>
         </div>
+        
+        {# Choix de l'heure #}
+        <div>
+          <label for="interventionTime">Choisissez une heure de rendez-vous :</label>
+          <input type="time" id="interventionTime" name="interventionTime" min="09:00" max="18:00" value="14:00"required class="m-2"/>
+        </div>
+
+        {# Indications particulières #}
         <div class="form-group row">
-          <label for="medicalTreatment" class="col-4 col-form-label">Avez-vous des allergies ou suivez-vous un traitement particulier ?</label> 
+          <label for="comments" class="col-4 col-form-label">Avez-vous des allergies ou suivez-vous un traitement particulier ?</label> 
           <div class="col-8">
-            <textarea id="medicalTreatment" name="medicalTreatment" cols="40" rows="5" class="form-control"></textarea>
+            <textarea id="comments" name="comments" cols="40" rows="5" class="form-control"></textarea>
           </div>
         </div> 
-        <div class="form-group row">
+
+        {# Bouton #}
+        <div class="form-group row mt-2">
           <div class="offset-4 col-8">
             <button name="submit" type="submit" class="btn btn-primary">Confirmer</button>
           </div>

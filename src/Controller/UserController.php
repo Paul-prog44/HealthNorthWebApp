@@ -4,7 +4,6 @@ namespace App\Controller;
 
 
 use Exception;
-use App\Service\DatabaseService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,11 +14,10 @@ class UserController extends AbstractController
 {
     
     private $httpClient;
-    private $databaseService;
 
 
 
-    public function __construct(HttpClientInterface $httpClient, DatabaseService $databaseService)
+    public function __construct(HttpClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
     }
@@ -61,7 +59,7 @@ class UserController extends AbstractController
     }
 
     #[Route('confirmationAccountEdit', name : 'confirmationAccountEdit')]
-    public function confirmationAccountEdit(Request $request)
+    public function confirmationAccountEdit(Request $request) : Response
     {
         $session = $request->getSession();
         $patientId = $session->get('id');

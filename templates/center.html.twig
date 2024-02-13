@@ -14,7 +14,13 @@
             <li>{{ specialty.name }}</li>
             {% endfor %}
         </ul>
-        <a href="{{ path('reservation') }}/{{ center.id }}" class="btn btn-primary mt-3">Prendre rendez-vous</a>
+        {% if sessionData %}
+            <a href="{{ path('reservation') }}/{{ center.id }}" class="btn btn-primary mt-3">Prendre rendez-vous</a>
+        {% else %}
+            <p>Veuillez vous connecter pour effectuer une réservation.</p>
+            <a  href="{{ path('connexion') }}" class="btn btn-primary">Connexion</a>
+        {% endif %}
+
         <a href="{{ path('centers') }}" class="btn btn-primary mt-3">Revenir aux centres</a>
     </div>
 </main>

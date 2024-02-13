@@ -1,9 +1,11 @@
-- Faire les update/delete des centres, docteur et spécialités
-- Faire un espace admin pour gérer les centres, docteurs, spécialités.
-- Ranger les controlleurs
-- Mettre en place la sécurité
+- Faire les update/delete des centres, docteur et spécialités DONE
+- Faire un espace admin pour gérer les centres, docteurs, spécialités. DONE
+- Ranger les controlleurs DONE
+- Mettre en place la sécurité DONE
 - Gérer les images des centres (Renommer les img, stocker leur emplacement en bdd, les afficher) DONE
 - Gérer les réservations
-- Réinitialiser les spécialités avant d'envoyer la nouvelle liste !
+- Réinitialiser les spécialités avant d'envoyer la nouvelle liste ! DONE
 - Faire un template de confirmation de suppression de médecin
 - Vérifier la route addDoctor
+- Ajouter un champ comments aux réservations
+- Gérer l'accès admin
