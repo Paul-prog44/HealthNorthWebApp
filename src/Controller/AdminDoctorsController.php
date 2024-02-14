@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Exception;
+use App\Controller\DoctorController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -110,7 +111,7 @@ class AdminDoctorsController extends AbstractController
     }
 
     #[Route('/addDoctor', name : 'addDoctor')]
-    public function createCenter() : Response
+    public function createCenter() : Response //A vérifier
     {
         $centers = $this->fetchApiCentersData();
         $specialties = $this->fetchSpecialties();
