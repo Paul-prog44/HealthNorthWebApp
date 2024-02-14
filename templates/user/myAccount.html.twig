@@ -17,6 +17,12 @@
         <p>Numéro de sécurité sociale : {{ sessionData.social_security }}</p>
         <h5>Votre dossier médical : </h5>
         <p>Vos allergies : {{ medicalFile.allergies }}</p>
+        <h5>Vos réservations : </h5>
+        <ul>
+        {% for reservation in medicalFile.reservations %}
+        <li>{{ reservation.doctor.lastName }} - {{ reservation.center.name }} - {{ reservation.date }}</li>
+        {% endfor %}
+        </ul>
         <a href="{{ path('editAccount') }}" class="btn btn-primary mt-3">Modifier mes informations personnelles</a>
         <a href="{{ path('homepage') }}" class="btn btn-primary mt-3">Revenir à l'accueil</a>
 
