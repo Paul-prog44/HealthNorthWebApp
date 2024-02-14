@@ -6,6 +6,7 @@
 - Gérer les réservations
 - Réinitialiser les spécialités avant d'envoyer la nouvelle liste ! DONE
 - Faire un template de confirmation de suppression de médecin
-- Vérifier la route addDoctor
+- Vérifier la route addDoctor/edit doctor
 - Ajouter un champ comments aux réservations
 - Gérer l'accès admin
+- hasher les mdp

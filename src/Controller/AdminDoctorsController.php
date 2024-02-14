@@ -29,10 +29,10 @@ class AdminDoctorsController extends AbstractController
 
     }
 
-    public function fetchDoctorList() : array 
+    public function fetchDoctorList(int $doctorId = null) : array 
     {
         $response = $this->httpClient->request(
-            'GET', 'https://127.0.0.1:8000/api/doctors',['verify_peer' => false,
+            'GET', 'https://127.0.0.1:8000/api/doctors/'.$doctorId ,['verify_peer' => false,
             'verify_host' => false,]);
 
         $content = $response->getContent();
