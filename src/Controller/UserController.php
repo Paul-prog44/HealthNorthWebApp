@@ -36,11 +36,34 @@ class UserController extends AbstractController
         return $content;
     }
 
+    public function fetchMedicalFile(int $medicalFileId) 
+    {
+            $response = $this->httpClient->request(
+            'GET', 'https://127.0.0.1:8000/api/medicalFiles/'.$medicalFileId ,[
+            'verify_peer' => false,
+            'verify_host' => false,
+        ]);
+
+        $content = $response->getContent();
+        $content = $response->toArray();
+
+        return $content;
+    }
+
+
     
     #[Route('/userAccount', name : 'userAccount')]
-    public function userAccount() : Response
+    public function userAccount(Request $request) : Response
     {
-        return $this->render('user/myAccount.html.twig');
+        //Récurépation de la session
+        $session = $request->getSession();
+
+        $patientId = $session->get('id');
+        $user = $this->fetchUserInformation($patientId);
+        $medicalFile = $this->fetchMedicalFile($user["medicalFile"]['id']);
+        return $this->render('user/myAccount.html.twig', [
+            'medicalFile' => $medicalFile
+        ]);
     }
 
     #[Route('editAccount', name: 'editAccount')]

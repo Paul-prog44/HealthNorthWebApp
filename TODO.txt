@@ -5,8 +5,10 @@
 - Gérer les images des centres (Renommer les img, stocker leur emplacement en bdd, les afficher) DONE
 - Gérer les réservations
 - Réinitialiser les spécialités avant d'envoyer la nouvelle liste ! DONE
-- Faire un template de confirmation de suppression de médecin
-- Vérifier la route addDoctor/edit doctor
+- Faire un template de confirmation de suppression de médecin DONE
+- Vérifier la route addDoctor/edit doctor DONE
 - Ajouter un champ comments aux réservations
 - Gérer l'accès admin
 - hasher les mdp
+- Envoie des emails de confirmation
+- Accès au dossier médical

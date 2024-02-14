@@ -5,7 +5,6 @@
 {% block body %}
 
 {# Récupération de la variable de session #}
-{% set sessionData = app.session.all() %} 
 <main>
     <div class="presentationCentre">
         <h3 class="mb-5">Vos informations personnelles</h3>
@@ -16,7 +15,8 @@
         <p>Adresse : {{ sessionData.address }}</p>
         {# <p>Numéro de téléphone</p> #}
         <p>Numéro de sécurité sociale : {{ sessionData.social_security }}</p>
-
+        <h5>Votre dossier médical : </h5>
+        <p>Vos allergies : {{ medicalFile.allergies }}</p>
         <a href="{{ path('editAccount') }}" class="btn btn-primary mt-3">Modifier mes informations personnelles</a>
         <a href="{{ path('homepage') }}" class="btn btn-primary mt-3">Revenir à l'accueil</a>
 

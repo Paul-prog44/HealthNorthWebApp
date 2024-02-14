@@ -5,27 +5,15 @@
 {% block body %}
 <main>
     <div class="reservation">
-      <form action="{{path ('reservationConfirmation') }}">
-
-        {# Choix de la spé médicale #}
-        <div class="form-group row">
-          <label for="medicalField" class="col-4 col-form-label">Spécialités</label> 
-          <div class="col-8">
-            <select id="medicalField" name="medicalField" class="custom-select">
-              {% for specialty in center.specialties %}
-                <option value="{{specialty.name }}">{{ specialty.name }}</option> {# Affichage dynamique des spécialités #}
-              {% endfor %}
-            </select>
-          </div>
-        </div>
+      <form action="{{path ('reservationConfirmation') }}/{{ center.id }}" method="POST">
 
         {# Choix du docteur #}
         <div class="form-group row">
-          <label for="choosenDoctor" class="col-4 col-form-label">Docteur</label> 
+          <label for="doctor" class="col-4 col-form-label">Docteur</label> 
           <div class="col-8">
-            <select id="choosenDoctor" name="choosenDoctor" class="custom-select">
+            <select id="doctor" name="doctor" class="custom-select">
               {% for doctor in doctors | filter(doctor => doctor.center.name == center.name ) %} {#Si un docteur n'a pas de centre attribué = crash #}
-                <option value="{{ doctor.lastName }}">{{ doctor.lastName }}</option>
+                <option value="{{ doctor.id }}">{{ doctor.lastName }}</option>
               {% endfor %}
             </select>
           </div>
@@ -56,7 +44,7 @@
         {# Bouton #}
         <div class="form-group row mt-2">
           <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary">Confirmer</button>
+            <button type="submit" class="btn btn-primary">Confirmer</button>
           </div>
         </div>
       </form>
