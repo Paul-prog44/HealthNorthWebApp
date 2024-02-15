@@ -7,9 +7,10 @@
 - Faire un template de confirmation de suppression de médecin DONE
 - Vérifier la route addDoctor/edit doctor DONE
 - Accès au dossier médical DONE
-- Formatter la date des réservations
-- Gérer les réservations
+- Gérer l'ajout des réservations dans le ReservationController, route : reservationConfirmation
+- Formatter la date des réservations en retour d'API
 - Ajouter un champ comments aux réservations
-- Gérer l'accès admin
-- Hasher les mdp
+- Gérer l'accès admin et firewall
+- Politique de mdp et Hasher les mdp
 - Envoie des emails de confirmation
+- Gestion des réservations

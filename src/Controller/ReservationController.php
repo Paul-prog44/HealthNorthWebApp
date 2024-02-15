@@ -31,15 +31,15 @@ class ReservationController extends AbstractController
         return $content;
     }
 
-    public function postReservation(int $centerId, DateTime $datetime) : array 
+    public function postReservation($dateTimeString, $centerId) : array 
     {
         $response = $this->httpClient->request(
-            'POST', 'https://127.0.0.1:8000/api/reservations',['verify_peer' => false,
+            'POST', 'https://127.0.0.1:8000/api/reservations/'.$centerId ,['verify_peer' => false,
             'verify_host' => false,
             'json' =>[
-                'center' => $centerId,
                 'doctor' => $_POST['doctor'],
-                "dateTime" => $datetime //A dénifir le format
+                "date" => $dateTimeString,
+                'medicalFile' => $_POST['medicalFileId']
             ]
         ]);
 
@@ -70,7 +70,12 @@ class ReservationController extends AbstractController
     #[Route('/reservationConfirmation/{centerId}', name : 'reservationConfirmation')]
     public function reservationCreation($centerId = null) : Response
     {
-        
+        $dateTimeString = $_POST['interventionDate'] . ' ' . $_POST['interventionTime'];
+        try {
+            $this->postReservation($dateTimeString, $centerId);
+        } catch (Exception $e){
+            return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        }
         return $this->render('confirmation/reservationConfirmation.html.twig');
     }
 

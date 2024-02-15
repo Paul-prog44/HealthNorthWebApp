@@ -20,7 +20,9 @@
         <h5>Vos réservations : </h5>
         <ul>
         {% for reservation in medicalFile.reservations %}
-        <li>{{ reservation.doctor.lastName }} - {{ reservation.center.name }} - {{ reservation.date }}</li>
+        {# Conversion de la date en objet twig datetime #}
+        {% set datetime_object = reservation.date %}
+        <li>Dr {{ reservation.doctor.lastName }} - {{ reservation.center.name }} - {{ datetime_object|date("d/m/Y H:i") }}</li>
         {% endfor %}
         </ul>
         <a href="{{ path('editAccount') }}" class="btn btn-primary mt-3">Modifier mes informations personnelles</a>
