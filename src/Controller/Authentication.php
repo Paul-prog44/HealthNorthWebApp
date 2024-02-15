@@ -25,7 +25,7 @@ class Authentication extends AbstractController
 
 
     #[Route('/connexion', name : 'connexion')]
-    public function accountCreation() : Response
+    public function connexion() : Response
     {
         return $this->render('user/connexion.html.twig');
     }

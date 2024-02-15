@@ -50,6 +50,29 @@ class UserController extends AbstractController
         return $content;
     }
 
+    public function postAccountCreation() 
+    {
+            $response = $this->httpClient->request(
+            'POST', 'https://127.0.0.1:8000/api/patients' ,[
+            'verify_peer' => false,
+            'verify_host' => false,
+            'json' => [
+                'gender' => $_POST['gender'],
+                'lastName' => $_POST['lastName'],
+                'firstname' => $_POST['firstName'],
+                'address' => $_POST['address'],
+                'emailAddress' =>$_POST['emailAddress'],
+                'password' => $_POST['password'],
+                'socialSecurity' => $_POST['socialSecurity']
+            ]
+        ]);
+
+        $content = $response->getContent();
+        $content = $response->toArray();
+
+        return $content;
+    }
+
 
     
     #[Route('/userAccount', name : 'userAccount')]
@@ -139,5 +162,33 @@ class UserController extends AbstractController
         $session->invalidate();
         return $this->render('user/logout.html.twig');
     }
- 
+
+    #[Route('accountCreation', name : 'accountCreation')]
+    public function accountCreation() : Response
+    {
+        return $this->render('user/createAccount.html.twig');
+    }
+    
+    
+
+    #[Route('confirmationAccountCreation', name: 'confirmationAccountCreation')]
+    public function confirmationAccountCreation(Request $request): Response
+    {
+        try{
+            $user = $this->postAccountCreation();
+            $session = $request->getSession();
+            //Mise en session de l'utilisateur
+            $session->set('id', $user['id']);
+            $session->set('gender', $user['gender']);
+            $session->set('last_name', $user['lastName']);
+            $session->set('first_name', $user['firstName']);
+            $session->set('address', $user['address']);
+            $session->set('email_address', $user['emailAddress']);
+            $session->set('social_security', $user['socialSecurity']);
+            $session->set('medical_file_id', $user['medicalFile']['id']);
+            return $this->render('confirmation/confirmationAccountCreation.html.twig');
+        } catch (Exception $e) {
+            return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        }
+    }
 }
