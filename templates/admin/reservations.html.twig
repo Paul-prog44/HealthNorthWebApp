@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Réservations {% endblock %}
+
+{% block body %}
+<main>
+    <h3>Liste des réservations</h3>
+    <ul>
+    {% for reservation in reservationsArray %}
+    {% set datetime_object = reservation.date %}
+    <li>
+    <p>{{ datetime_object|date("d/m/Y H:i") }}</p>
+    {% if reservation.medicalFile.patient %}
+    <p>Patient : {{ reservation.medicalFile.patient.firstName }} {{ reservation.medicalFile.patient.lastName }}</p>
+    {% endif %}
+    <p>Dr. {{ reservation.doctor.lastName}} - {{ reservation.center.name }}<p>
+    </li>
+    <a href="{{ path('deleteReservation') }}/{{ reservation.id }}" class="btn btn-primary mb-2">Supprimer</a>
+    {% endfor %}
+    </ul>
+</main>
+
+{% endblock %}

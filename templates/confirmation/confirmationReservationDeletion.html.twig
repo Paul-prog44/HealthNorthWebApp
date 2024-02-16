@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Confirmation de suppression {% endblock %}
+
+{% block body %}
+
+<main class="d-flex align-items-center flex-column">
+    <h3>La réservation a bien été annulée.</h3>
+    <a href="{{ path('reservations') }}"><button type="button" class="btn btn-primary mt-3">Revenir aux réservations</button></a>
+    <a href="{{ path('admin') }}"><button type="button" class="btn btn-primary mt-3">Espace administrateur</button></a>
+
+</main>
+
+{% endblock %}
