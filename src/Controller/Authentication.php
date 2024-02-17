@@ -48,7 +48,7 @@ class Authentication extends AbstractController
             if ($_POST['emailAddress']=== "" || $_POST['emailAddress'] === null || $result === [] ) {
                 return $this->render('user/connexionFailed.html.twig');
             }
-            else if ($result[0]['password'] === $password) {
+            else if (password_verify($password, $result[0]['password'] )) {
                 //Mise en session de l'utilisateur
 
                 $session->set('isLogged', true);

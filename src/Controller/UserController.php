@@ -9,13 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
     
     private $httpClient;
-
-
 
     public function __construct(HttpClientInterface $httpClient)
     {
@@ -52,6 +51,9 @@ class UserController extends AbstractController
 
     public function postAccountCreation() 
     {
+            
+            $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
             $response = $this->httpClient->request(
             'POST', 'https://127.0.0.1:8000/api/patients' ,[
             'verify_peer' => false,
@@ -62,7 +64,7 @@ class UserController extends AbstractController
                 'firstname' => $_POST['firstName'],
                 'address' => $_POST['address'],
                 'emailAddress' =>$_POST['emailAddress'],
-                'password' => $_POST['password'],
+                'password' => $hashedPassword,
                 'socialSecurity' => $_POST['socialSecurity']
             ]
         ]);
@@ -136,8 +138,10 @@ class UserController extends AbstractController
             return $this->render('errorTemplate.html.twig', ["error" => $e]);
         }
 
-        if ($_POST["oldPassword"] === $currentPassword &&  $this->checkPassword($_POST['newPassword']))
+        if (password_verify($_POST['oldPassword'], $currentPassword) &&  $this->checkPassword($_POST['newPassword']))
         {
+            $newhashedPassword = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
+            
             try { $this->httpClient->request(
                 'PUT', 'https://127.0.0.1:8000/api/patients/'.$patientId, [
                 'verify_peer' => false,
@@ -149,7 +153,7 @@ class UserController extends AbstractController
                     'address' => $_POST['address'],
                     'emailAddress' => $_POST['emailAddress'],
                     'socialSecurity' => $_POST['socialSecurity'],
-                    'password' => $_POST['newPassword']
+                    'password' =>  $newhashedPassword
                 ]
             ]);
             $user = $this->fetchUserInformation($patientId);

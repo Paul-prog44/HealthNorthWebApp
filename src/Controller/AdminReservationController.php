@@ -41,7 +41,7 @@ class AdminReservationController extends AbstractController
        return $statusCode;
     }
 
-    #[Route('Admin/Reservations', name : 'reservations')]
+    #[Route('admin/Reservations', name : 'reservations')]
     public function adminReservations() : Response
     {
         $reservationsArray = $this->fetchReservation();
