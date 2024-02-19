@@ -12,7 +12,7 @@ final class UserControllerTest extends TestCase
         $httpClientInterface = $this->createMock(HttpClientInterface::class);
         $userController = new UserController($httpClientInterface);
         
-        $this->assertSame(false, $userController->checkPassword("password"));
+        $this->assertSame(false, $userController->checkPassword("Pasword1!"));
         $this->assertSame(false, $userController->checkPassword("thisisaverylongpassword"));
         $this->assertSame(false, $userController->checkPassword("ThisIsAVeryLongPassword"));
         $this->assertSame(false, $userController->checkPassword("ThisIsAVeryLongPassword1"));
