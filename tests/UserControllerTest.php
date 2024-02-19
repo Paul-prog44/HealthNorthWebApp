@@ -6,12 +6,18 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class UserControllerTest extends TestCase
 {
-    public function testcheckPassword(HttpClientInterface $httpClient): void
+   
+    public function testcheckPassword(): void
     {
-        $userController = new UserController($httpClient);
+        $httpClientInterface = $this->createMock(HttpClientInterface::class);
+        $userController = new UserController($httpClientInterface);
+        
+        $this->assertSame(false, $userController->checkPassword("password"));
+        $this->assertSame(false, $userController->checkPassword("thisisaverylongpassword"));
+        $this->assertSame(false, $userController->checkPassword("ThisIsAVeryLongPassword"));
+        $this->assertSame(false, $userController->checkPassword("ThisIsAVeryLongPassword1"));
+        $this->assertSame(true, $userController->checkPassword("ThisIsAVeryLongPassword1!"));
 
-        $resultOfCheckPassword = $userController->checkPassword('Alice');
 
-        $this->assertSame(false, $resultOfCheckPassword);
     }
 }
