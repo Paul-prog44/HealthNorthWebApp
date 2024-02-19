@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
@@ -199,11 +198,11 @@ class UserController extends AbstractController
         if ($_POST['acceptCgu']==="on") {$_POST['acceptCgu'] = true;}
         
         if ($this->checkPassword($_POST['password']) && $_POST['password'] === $_POST['passwordConfirmation'] ){
-            
             $user = $this->postAccountCreation();
             try{
                 $session = $request->getSession();
                 //Mise en session de l'utilisateur
+                $session->set('isAdmin', false);
                 $session->set('id', $user['id']);
                 $session->set('gender', $user['gender']);
                 $session->set('last_name', $user['lastName']);
