@@ -66,5 +66,11 @@ class HomepageController extends AbstractController
             return $this->render('errorTemplate.html.twig', ["error" => $e]);
         }
     }
+
+    #[Route('/conditionsGeneralesDutilisation', name : 'conditionsGeneralesDutilisation')]
+    public function conditionsGeneralesDutilisation() : Response
+    {
+        return $this->render('conditionsGeneralesDutilisation.html.twig');
+    }
     
 }
