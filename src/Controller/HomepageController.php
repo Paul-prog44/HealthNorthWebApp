@@ -72,5 +72,11 @@ class HomepageController extends AbstractController
     {
         return $this->render('conditionsGeneralesDutilisation.html.twig');
     }
+
+    #[Route('/contact', name : 'contact')]
+    public function contact() : response
+    {
+        return $this->render('contact.html.twig');
+    }
     
 }

@@ -52,6 +52,7 @@ class Authentication extends AbstractController
                 //Mise en session de l'utilisateur
 
                 $session->set('isLogged', true);
+                $session->set('isAdmin', false);
                 $session->set('id', $result[0]['id']);
                 $session->set('medical_file_id', $result[0]['medical_file_id']);
                 $session->set('gender', $result[0]['gender']);
@@ -60,6 +61,46 @@ class Authentication extends AbstractController
                 $session->set('address', $result[0]['address']);
                 $session->set('email_address', $result[0]['email_address']);
                 $session->set('social_security', $result[0]['social_security']);
+
+                return $this->render('user/connexionSuccess.html.twig');
+            } else  {
+                return $this->render('user/connexionFailed.html.twig');
+            }
+        } catch (Exception $e) 
+        {
+            return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        }    
+    }
+
+    #[Route('/adminConnexion', name : 'adminConnexion')]
+    public function adminConnexion() : Response
+    {
+        return $this->render('admin/adminConnexion.html.twig');
+    }
+
+    #[Route('/adminLoggin', name : 'adminLoggin')]
+    public function adminLoggin(Request $request) 
+    {
+        $session = $request->getSession();
+        $emailAddress = $_POST['emailAddress'];
+        $password =  $_POST['password'];
+
+
+        $query = 'SELECT * FROM north_health.user WHERE email = :email'; //WHERE email_address = jsmith@gmail.com
+        $params = ['email' => $emailAddress];
+        try {
+
+            $result = $this->databaseService->executeQuery($query, $params);
+
+            if ($_POST['emailAddress']=== "" || $_POST['emailAddress'] === null || $result === [] ) {
+                return $this->render('user/connexionFailed.html.twig');
+            }
+            else if ($password === $result[0]['password'] ) {
+                //Mise en session de l'utilisateur
+
+                $session->set('isLogged', true);
+                $session->set('isAdmin', true);
+                $session->set('id', $result[0]['id']);
 
                 return $this->render('user/connexionSuccess.html.twig');
             } else  {

@@ -27,15 +27,24 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                {# Affichage du menu admin si isadmin = true #}
+                {% if sessionData and sessionData.isAdmin %}
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ path('admin') }}">Administration</a>
                     </li>
+                {% endif %}
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ path('centers') }}">Nos centres</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Contact</a>
+                        <a class="nav-link active" href="{{ path('contact')}} ">Contact</a>
                     </li>
+                    {# Permet de filterer l'affichage en fct de isadmin #}
+                    {% if sessionData and sessionData.isAdmin == false %} 
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('userAccount') }}">Votre compte</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -43,7 +52,11 @@
             {% if sessionData %}
             <div class="d-flex" style="padding-right : 10px">
                 <img src="/img/user-solid.svg" alt="logo compte" class="logoReseau"></img>
-                <a class="nav-link active" href="{{ path('userAccount') }} " style="margin-left : 10px">{{ sessionData.first_name }} {{ sessionData.last_name }}</a>
+                {% if sessionData.isAdmin %}
+                <p>ADMIN</p>
+                {% else %}
+                <a class="nav-link active" href="{{ path('userAccount') }}" style="margin-left : 10px">{{ sessionData.first_name }} {{ sessionData.last_name }}</a>
+                {% endif %}
             </div>
             <a href="{{ path('logout') }}">Se déconnecter</a>
             {% else %}
