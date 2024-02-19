@@ -65,7 +65,8 @@ class UserController extends AbstractController
                 'address' => $_POST['address'],
                 'emailAddress' =>$_POST['emailAddress'],
                 'password' => $hashedPassword,
-                'socialSecurity' => $_POST['socialSecurity']
+                'socialSecurity' => $_POST['socialSecurity'],
+                'acceptCgu' => $_POST['acceptCgu']
             ]
         ]);
 
@@ -195,8 +196,10 @@ class UserController extends AbstractController
     #[Route('confirmationAccountCreation', name: 'confirmationAccountCreation')]
     public function confirmationAccountCreation(Request $request): Response
     {
-
+        if ($_POST['acceptCgu']==="on") {$_POST['acceptCgu'] = true;}
+        
         if ($this->checkPassword($_POST['password']) && $_POST['password'] === $_POST['passwordConfirmation'] ){
+            
             $user = $this->postAccountCreation();
             try{
                 $session = $request->getSession();
