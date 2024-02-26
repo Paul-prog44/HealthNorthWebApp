@@ -62,6 +62,7 @@ class UserController extends AbstractController
                 'lastName' => $_POST['lastName'],
                 'firstname' => $_POST['firstName'],
                 'address' => $_POST['address'],
+                'city' => $_POST['city'],
                 'emailAddress' =>$_POST['emailAddress'],
                 'password' => $hashedPassword,
                 'socialSecurity' => $_POST['socialSecurity'],
