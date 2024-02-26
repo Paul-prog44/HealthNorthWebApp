@@ -6,18 +6,20 @@
 
 <main>
     <h1>Choix du centre :</h1>
-    <div class="centerDisplay">
-        {% for center in centers %}
-        <div class="card m-2" style="width: 30%;">
-            <img src="/img/centerImg/{{center.imageFileName }}" class="card-img-top" alt="Photo du centre médical">
-            <div class="card-body">
-                <h5 class="card-title">{{center.name}}</h5>
-                <p class="card-text">{{ center.city }} - {{ center.country }}</p>
-                <a href="{{ path('centers') }}/{{ center.id }}" class="btn btn-primary">Consulter</a>
-            </div>
-        </div>
+    <label for="city">Choisissez une ville :</label>
+    <form action="{{ path('centerCity') }}" method="POST"> 
+    <select id="selectedCity" name="selectedCity">
+        <option value='all' selected>Toutes les villes<option>
+        {% for city in centerCities %}
+            <option value="{{city}}">{{city}}</option>
         {% endfor %}
+            <select>
+    <div>
+        <button type="submit" class="btn btn-primary mt-3">Chercher</button>
     </div>
+    </form>
+    {% block centersList %}
+    {% endblock %}
 </main>
 
 {% endblock %}

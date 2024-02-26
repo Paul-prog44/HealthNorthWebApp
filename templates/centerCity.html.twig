@@ -1,0 +1,30 @@
+{% extends 'centers.html.twig' %}
+
+{% block centersList %}
+<div class="centerDisplay">
+{% if city == "all" %}
+        {% for center in centers %}
+        <div class="card m-2" style="width: 30%;">
+            <img src="/img/centerImg/{{center.imageFileName }}" class="card-img-top" alt="Photo du centre médical">
+            <div class="card-body">
+                <h5 class="card-title">{{center.name}}</h5>
+                <p class="card-text">{{ center.city }} - {{ center.country }}</p>
+                <a href="{{ path('centers') }}/{{ center.id }}" class="btn btn-primary">Consulter</a>
+            </div>
+        </div>
+        {% endfor %}
+{% else %} 
+    {% set filteredCenters = centers | filter(item => item.city == city) %}
+    {% for center in filteredCenters %}
+        <div class="card m-2" style="width: 30%;">
+            <img src="/img/centerImg/{{center.imageFileName }}" class="card-img-top" alt="Photo du centre médical">
+            <div class="card-body">
+                <h5 class="card-title">{{center.name}}</h5>
+                <p class="card-text">{{ center.city }} - {{ center.country }}</p>
+                <a href="{{ path('centers') }}/{{ center.id }}" class="btn btn-primary">Consulter</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+    </div>
+{% endblock %}

@@ -93,8 +93,25 @@ class CenterController extends AbstractController
             ["center" => $center]); //On passe le centre à la vue
         } else {
             $centers = $this->fetchApiCentersData(); //
+            foreach ($centers as $center ) {
+                $centerCities[] = $center['city'];
+            }
             return $this->render('centers.html.twig',
-            ["centers" => $centers]);
+            ["centers" => $centers,
+            "centerCities" => $centerCities]);
         }
+    }
+
+    #[Route('/centerCity', name : 'centerCity')]
+    public function centerCity() : Response
+    {
+        $centers = $this->fetchApiCentersData();
+        foreach ($centers as $center ) {
+            $centerCities[] = $center['city'];
+        }
+        return $this->render('centerCity.html.twig',
+        ['city' =>$_POST['selectedCity'],
+        "centers" => $centers,
+        "centerCities" => $centerCities]);
     }
 }
