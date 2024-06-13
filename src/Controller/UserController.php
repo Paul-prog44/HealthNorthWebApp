@@ -50,9 +50,6 @@ class UserController extends AbstractController
 
     public function postAccountCreation() 
     {
-            
-            $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
             $response = $this->httpClient->request(
             'POST', 'https://127.0.0.1:8000/api/patients' ,[
             'verify_peer' => false,
@@ -64,7 +61,7 @@ class UserController extends AbstractController
                 'address' => $_POST['address'],
                 'city' => $_POST['city'],
                 'emailAddress' =>$_POST['emailAddress'],
-                'password' => $hashedPassword,
+                'password' => $$_POST['password'],
                 'socialSecurity' => $_POST['socialSecurity'],
                 'acceptCgu' => $_POST['acceptCgu']
             ]
@@ -141,8 +138,7 @@ class UserController extends AbstractController
 
         if (password_verify($_POST['oldPassword'], $currentPassword) &&  $this->checkPassword($_POST['newPassword']))
         {
-            $newhashedPassword = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
-            
+        
             try { $this->httpClient->request(
                 'PUT', 'https://127.0.0.1:8000/api/patients/'.$patientId, [
                 'verify_peer' => false,
@@ -154,7 +150,7 @@ class UserController extends AbstractController
                     'address' => $_POST['address'],
                     'emailAddress' => $_POST['emailAddress'],
                     'socialSecurity' => $_POST['socialSecurity'],
-                    'password' =>  $newhashedPassword
+                    'password' =>  $_POST['newPassword']
                 ]
             ]);
             $user = $this->fetchUserInformation($patientId);
