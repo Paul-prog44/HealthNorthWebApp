@@ -12,7 +12,7 @@
         {% endblock %}
 
         {% block javascripts %}
-{% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
         {% set sessionData = app.session.all() %} 
 
@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                 {# Affichage du menu admin si isadmin = true #}
-                {% if sessionData and sessionData.isAdmin %}
+                {% if sessionData and sessionData.isAdmin is defined %}
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ path('admin') }}">Administration</a>
                     </li>
@@ -40,7 +40,7 @@
                         <a class="nav-link active" href="{{ path('contact')}} ">Contact</a>
                     </li>
                     {# Permet de filterer l'affichage en fct de isadmin #}
-                    {% if sessionData and sessionData.isAdmin == false %} 
+                    {% if sessionData and sessionData.isAdmin is not defined %} 
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ path('userAccount') }}">Votre compte</a>
                     </li>
@@ -49,10 +49,10 @@
             </div>
         </div>
         <div>
-            {% if sessionData %}
+            {% if sessionData.first_name is defined %}
             <div class="d-flex" style="padding-right : 10px">
                 <img src="/img/user-solid.svg" alt="logo compte" class="logoReseau"></img>
-                {% if sessionData.isAdmin %}
+                {% if sessionData.isAdmin is defined %}
                 <p>ADMIN</p>
                 {% else %}
                 <a class="nav-link active" href="{{ path('userAccount') }}" style="margin-left : 10px">{{ sessionData.first_name }} {{ sessionData.last_name }}</a>

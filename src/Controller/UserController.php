@@ -61,16 +61,16 @@ class UserController extends AbstractController
                 'address' => $_POST['address'],
                 'city' => $_POST['city'],
                 'emailAddress' =>$_POST['emailAddress'],
-                'password' => $$_POST['password'],
+                'password' => $_POST['password'],
                 'socialSecurity' => $_POST['socialSecurity'],
                 'acceptCgu' => $_POST['acceptCgu']
             ]
         ]);
 
-        $content = $response->getContent();
-        $content = $response->toArray();
-
-        return $content;
+        if ($response->getStatusCode()=== 409) {
+            return 0;
+        }
+        return $response->getContent();
     }
     //Vérififcation de la complexité du mdp
     public function checkPassword($password) : bool
@@ -195,23 +195,32 @@ class UserController extends AbstractController
         if ($_POST['acceptCgu']==="on") {$_POST['acceptCgu'] = true;}
         
         if ($this->checkPassword($_POST['password']) && $_POST['password'] === $_POST['passwordConfirmation'] ){
-            $user = $this->postAccountCreation();
-            try{
-                $session = $request->getSession();
-                //Mise en session de l'utilisateur
-                $session->set('isAdmin', false);
-                $session->set('id', $user['id']);
-                $session->set('gender', $user['gender']);
-                $session->set('last_name', $user['lastName']);
-                $session->set('first_name', $user['firstName']);
-                $session->set('address', $user['address']);
-                $session->set('email_address', $user['emailAddress']);
-                $session->set('social_security', $user['socialSecurity']);
-                $session->set('medical_file_id', $user['medicalFile']['id']);
-                return $this->render('confirmation/confirmationAccountCreation.html.twig');
-            } catch (Exception $e) {
-                return $this->render('errorTemplate.html.twig', ["error" => $e]);
-            }
+
+                try {
+                    // Appel de postAccountCreation une seule fois et stockage du résultat dans une variable
+                    $result = $this->postAccountCreation();
+                    $user = json_decode($result, true);
+
+                    if ($result === 0) {
+                        return $this->render('errorTemplate.html.twig', ["error" => "L'adresse email existe déjà"]);
+                    } else {
+                        $session = $request->getSession();
+                        $session->set('id', $user['id']);
+                        $session->set('gender', $user['gender']);
+                        $session->set('last_name', $user['lastName']);
+                        $session->set('first_name', $user['firstName']);
+                        $session->set('address', $user['address']);
+                        $session->set('email_address', $user['emailAddress']);
+                        $session->set('social_security', $user['socialSecurity']);
+                        $session->set('medical_file_id', $user['medicalFile']['id']);
+                        return $this->render('confirmation/confirmationAccountCreation.html.twig');
+                    }
+                } catch (Exception $e) {
+                    // Ajout de plus de détails à l'exception pour faciliter le débogage
+                    return $this->render('errorTemplate.html.twig', ["error" => $e->getMessage()]);
+                }
+            
+            
         } else if ($this->checkPassword($_POST['password']) && $_POST['password'] !== $_POST['passwordConfirmation'] ) {
             return $this->render('error/differentPasswords.html.twig');
         } else {
