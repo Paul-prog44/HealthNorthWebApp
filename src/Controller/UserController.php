@@ -155,6 +155,8 @@ class UserController extends AbstractController
             ]);
             $user = $this->fetchUserInformation($patientId);
 
+            $session->set('isLogged', true);
+            $session->set('isAdmin', false);
             $session->set('gender', $user['gender']);
             $session->set('last_name', $user['lastName']);
             $session->set('first_name', $user['firstName']);
@@ -205,6 +207,8 @@ class UserController extends AbstractController
                         return $this->render('errorTemplate.html.twig', ["error" => "L'adresse email existe déjà"]);
                     } else {
                         $session = $request->getSession();
+                        $session->set('isLogged', true);
+                        $session->set('isAdmin', false);
                         $session->set('id', $user['id']);
                         $session->set('gender', $user['gender']);
                         $session->set('last_name', $user['lastName']);
