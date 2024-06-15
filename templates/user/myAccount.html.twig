@@ -22,7 +22,7 @@
         {% for reservation in medicalFile.reservations %}
         {# Conversion de la date en objet twig datetime #}
         {% set datetime_object = reservation.date %}
-        <li>Dr {{ reservation.doctor.lastName }} - {{ reservation.center.name }} - {{ datetime_object|date("d/m/Y H:i") }}</li>
+        <li><a href="{{ path('reservationDeletetion') }}/{{reservation.id }}" class="btn btn-warning mt-3">Annuler</a>  Dr {{ reservation.doctor.lastName }} - {{ reservation.center.name }} - {{ datetime_object|date("d/m/Y H:i") }}</li>
         {% endfor %}
         </ul>
         <a href="{{ path('editAccount') }}" class="btn btn-primary mt-3">Modifier mes informations personnelles</a>

@@ -49,6 +49,17 @@ class ReservationController extends AbstractController
         return $content;
     }
 
+    public function deleteReservationApi(int $reservationId)
+    {
+        $response = $this->httpClient->request(
+            'DELETE', 'https://127.0.0.1:8000/api/reservations/'.$reservationId ,
+            ['verify_peer' => false,
+            'verify_host' => false,]);
+
+        $statusCode = $response->getStatusCode();
+       return $statusCode;
+    }
+
 
     #[Route('/reservation/{centerId}', name: 'reservation' )]
     public function reservation($centerId = null) : Response
@@ -77,6 +88,24 @@ class ReservationController extends AbstractController
             return $this->render('errorTemplate.html.twig', ["error" => $e]);
         }
         return $this->render('confirmation/reservationConfirmation.html.twig');
+    }
+
+    #[Route('/reservationDeletetion/{reservationId}', name:'reservationDeletetion')]
+    public function reservationDeletetion($reservationId= null) : Response
+    {
+        try {
+            $statusCode = $this->deleteReservationApi($reservationId);
+
+            if($statusCode===204) {
+                return $this->render('confirmation/confirmationReservationDeletion.html.twig');
+            } else {
+                return $this->render('errorTemplate.html.twig', ["error" => "Une erreur est survenu, merci de réessayer."]);
+            }
+        } catch (Exception $e) {
+            return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        }
+
+
     }
 
 }
