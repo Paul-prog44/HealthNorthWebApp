@@ -38,8 +38,9 @@ class ReservationController extends AbstractController
             'verify_host' => false,
             'json' =>[
                 'doctor' => $_POST['doctor'],
-                "date" => $dateTimeString,
-                'medicalFile' => $_POST['medicalFileId']
+                'date' => $dateTimeString,
+                'medicalFile' => $_POST['medicalFileId'],
+                'comments' => $_POST['comments']
             ]
         ]);
 
