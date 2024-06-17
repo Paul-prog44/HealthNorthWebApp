@@ -8,7 +8,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
 class CenterController extends AbstractController
 {
     private $httpClient;

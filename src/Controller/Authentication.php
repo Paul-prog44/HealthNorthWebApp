@@ -78,8 +78,8 @@ class Authentication extends AbstractController
         return $this->render('admin/adminConnexion.html.twig');
     }
 
-    #[Route('/adminLoggin', name : 'adminLoggin')]
-    public function adminLoggin(Request $request) 
+    #[Route('/adminPanel', name : 'adminPanel')]
+    public function adminPanel(Request $request) 
     {
         $session = $request->getSession();
         $emailAddress = $_POST['emailAddress'];
@@ -102,11 +102,11 @@ class Authentication extends AbstractController
                 $session->set('isAdmin', true);
                 $session->set('id', $result[0]['id']);
 
-                return $this->render('user/connexionSuccess.html.twig');
+                return $this->render('admin/admin.html.twig');
             } else  {
                 return $this->render('user/connexionFailed.html.twig');
             }
-        } catch (Exception $e) 
+        } catch (Exception $e)
         {
             return $this->render('errorTemplate.html.twig', ["error" => $e]);
         }    

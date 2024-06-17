@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminDoctorsController extends AbstractController
 {
@@ -140,10 +141,16 @@ class AdminDoctorsController extends AbstractController
     }
 
     #[Route('/admin/doctors', name : 'adminDoctors')]
-    public function adminDoctors() : Response
+    public function adminDoctors(Request $request) : Response
     {
-        $doctorArray = $this->fetchDoctorList();
-        return $this->render('admin/adminDoctors.html.twig', ["doctorArray" => $doctorArray]);
+        $session = $request->getSession();
+        if ($session->get("isAdmin")) {
+            $doctorArray = $this->fetchDoctorList();
+            return $this->render('admin/adminDoctors.html.twig', ["doctorArray" => $doctorArray]);
+        } else {
+            return $this->render('errorTemplate.html.twig', ["error" => "Cette partie est réservée aux administrateurs"]);
+        }
+        
     }
 
     #[Route('/admin/deleteDoctor/{doctorId}', name : 'deleteDoctor')]
