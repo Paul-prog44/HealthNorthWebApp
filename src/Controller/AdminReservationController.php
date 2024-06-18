@@ -66,10 +66,17 @@ class AdminReservationController extends AbstractController
     }
 
     #[Route('admin/Reservations', name : 'reservations')]
-    public function adminReservations() : Response
+    public function adminReservations(Request $request) : Response
     {
-        $reservationsArray = $this->fetchAllReservations();
-        return $this->render('admin/reservations.html.twig',['reservationsArray' => $reservationsArray]);
+        $session = $request->getSession();
+        $sessionData=$session->all();
+        //Vérification du role
+        if ($sessionData and $sessionData['isAdmin'] == true) {
+            $reservationsArray = $this->fetchAllReservations();
+            return $this->render('admin/reservations.html.twig',['reservationsArray' => $reservationsArray]);
+        } else {
+            return $this->render('errorTemplate.html.twig', ["error" => "Cette partie est réservée aux administrateurs"]);
+        }
     }
     
     #[Route('admin/deleteReservation/{reservationId}', name: 'deleteReservation')]

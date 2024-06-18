@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminCenterController extends AbstractController
 {
@@ -117,17 +118,25 @@ class AdminCenterController extends AbstractController
 
 
     #[Route('/admin/centers/{slug}', name: 'adminCenters')]
-    public function centers($slug = null): Response
+    public function centers(Request $request, $slug = null): Response
     {
-        if ($slug) {
-            $center = $this->fetchCenterInformation($slug); //recupère un centre en fonction de son id
-            return $this->render('admin/adminCenter.html.twig',
-            ["center" => $center]); //On passe le centre à la vue
-        } else {
-            $centers = $this->fetchApiCentersData(); //
-            return $this->render('admin/adminCenters.html.twig',
-            ["centers" => $centers]);
+        $session = $request->getSession();
+        $sessionData=$session->all();
+        //Vérification du role
+        if ($sessionData and $sessionData['isAdmin'] == true) {
+            if ($slug) {
+                $center = $this->fetchCenterInformation($slug); //recupère un centre en fonction de son id
+                return $this->render('admin/adminCenter.html.twig',
+                ["center" => $center]); //On passe le centre à la vue
+            } else {
+                $centers = $this->fetchApiCentersData(); //
+                return $this->render('admin/adminCenters.html.twig',
+                ["centers" => $centers]);
+            }
+        } else  {
+            return $this->render('errorTemplate.html.twig', ["error" => "Cette partie est réservée aux administrateurs"]);
         }
+       
     }
 
     #[Route('/admin/addCenter', name : 'addCenter')]

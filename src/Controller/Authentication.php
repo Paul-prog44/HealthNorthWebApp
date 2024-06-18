@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\VarDumper\Cloner\Data;
 
 class Authentication extends AbstractController
 {
@@ -116,7 +115,13 @@ class Authentication extends AbstractController
     public function adminPanel(Request $request) 
     {
         $session = $request->getSession();
-        return $this->render('admin/admin.html.twig');   
+        $sessionData=$session->all();
+        //Vérification du role
+        if ($sessionData and $sessionData['isAdmin'] == true) {
+            return $this->render('admin/admin.html.twig');  
+        } else  {
+            return $this->render('errorTemplate.html.twig', ["error" => "Cette partie est réservée aux administrateurs"]);
+        }
     }
 
 }

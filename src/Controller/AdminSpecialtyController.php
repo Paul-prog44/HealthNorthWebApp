@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 use function PHPUnit\Framework\throwException;
 
@@ -70,15 +71,20 @@ class AdminSpecialtyController extends AbstractController
 
 
     #[Route ('admin/specialties', name : 'specialties')]
-    public function getSpecialties() : Response
+    public function getSpecialties(Request $request) : Response
     {   
-        try {
-        $specialtiesArray = $this->fetchSpecialty();
-        return $this->render('admin/adminSpecialties.html.twig', ['specialtiesArray' => $specialtiesArray]);
-
-        } catch(Exception $e) {
-            return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        $session = $request->getSession();
+        if ($session->get("isAdmin")) {
+            try {
+                $specialtiesArray = $this->fetchSpecialty();
+                return $this->render('admin/adminSpecialties.html.twig', ['specialtiesArray' => $specialtiesArray]);
+            } catch(Exception $e) {
+                    return $this->render('errorTemplate.html.twig', ["error" => $e]);
+                }
+        } else {
+            return $this->render('errorTemplate.html.twig', ["error" => "Cette partie est réservée aux administrateurs"]);
         }
+       
     }
 
     #[Route('admin/deleteSpecialties/{specialtyId}', name : 'deleteSpecialty')]
