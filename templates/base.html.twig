@@ -49,21 +49,23 @@
             </div>
         </div>
         <div>
-            {% if sessionData.first_name is defined %}
-            <div class="d-flex" style="padding-right : 10px">
-                <img src="/img/user-solid.svg" alt="logo compte" class="logoReseau"></img>
-                {% if sessionData.isAdmin == true %}
-                <p>ADMIN</p>
-                {% else %}
-                <a class="nav-link active" href="{{ path('userAccount') }}" style="margin-left : 10px">{{ sessionData.first_name }} {{ sessionData.last_name }}</a>
-                {% endif %}
-            </div>
+        {% if sessionData.isAdmin is defined and sessionData.isAdmin == true %}
+            <p>ADMIN</p>
             <a href="{{ path('logout') }}">Se déconnecter</a>
+        {% else %}
+            {% if sessionData.first_name is defined %}
+                <div class="d-flex" style="padding-right : 10px">
+                    <img src="/img/user-solid.svg" alt="logo compte" class="logoReseau"></img>
+                    <a class="nav-link active" href="{{ path('userAccount') }}" style="margin-left : 10px">{{ sessionData.first_name }} {{ sessionData.last_name }}</a>
+                </div>
+                <a href="{{ path('logout') }}">Se déconnecter</a>
             {% else %}
                 <div class="nav-item" style="padding-right : 10px">
                     <a class="nav-link active" href="{{ path('connexion') }}">Connexion</a>
                 </div>
             {% endif %}
+        {% endif %}
+            
         </div>
     </header>
         {% block body %}{% endblock %}

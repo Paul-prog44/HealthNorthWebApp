@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\VarDumper\Cloner\Data;
 
 class Authentication extends AbstractController
 {
@@ -78,13 +79,12 @@ class Authentication extends AbstractController
         return $this->render('admin/adminConnexion.html.twig');
     }
 
-    #[Route('/adminPanel', name : 'adminPanel')]
-    public function adminPanel(Request $request) 
+    #[Route('/admin/connexionConfirmed', name : 'adminConnexionConfirmed')]
+    public function adminConnexionConfirmed(Request $request) : Response
     {
         $session = $request->getSession();
         $emailAddress = $_POST['emailAddress'];
         $password =  $_POST['password'];
-
 
         $query = 'SELECT * FROM north_health.user WHERE email = :email'; //WHERE email_address = jsmith@gmail.com
         $params = ['email' => $emailAddress];
@@ -101,8 +101,8 @@ class Authentication extends AbstractController
                 $session->set('isLogged', true);
                 $session->set('isAdmin', true);
                 $session->set('id', $result[0]['id']);
-
-                return $this->render('admin/admin.html.twig');
+                $sessionData=$session->all();
+                return $this->render('user/connexionSuccess.html.twig', ['session' => $sessionData]);
             } else  {
                 return $this->render('user/connexionFailed.html.twig');
             }
@@ -110,6 +110,13 @@ class Authentication extends AbstractController
         {
             return $this->render('errorTemplate.html.twig', ["error" => $e]);
         }    
+    }
+
+    #[Route('/adminPanel', name : 'adminPanel')]
+    public function adminPanel(Request $request) 
+    {
+        $session = $request->getSession();
+        return $this->render('admin/admin.html.twig');   
     }
 
 }
