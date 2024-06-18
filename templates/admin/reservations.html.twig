@@ -4,7 +4,10 @@
 
 {% block body %}
 <main>
-    <h3>Liste des réservations</h3>
+{% if message is defined %}
+<h3>{{message}}</h3>
+{% endif %}
+    <h5>Liste des réservations</h5>
     <ul>
     {% for reservation in reservationsArray %}
     {% set datetime_object = reservation.date %}
@@ -14,8 +17,12 @@
     <p>Patient : {{ reservation.medicalFile.patient.firstName }} {{ reservation.medicalFile.patient.lastName }}</p>
     {% endif %}
     <p>Dr. {{ reservation.doctor.lastName}} - {{ reservation.center.name }}<p>
+    {% if reservation.comments != null %}
+    <p><b>Commentaires :</b> {{reservation.comments}}
+    {% endif %}
     </li>
-    <a href="{{ path('deleteReservation') }}/{{ reservation.id }}" class="btn btn-primary mb-2">Supprimer</a>
+    <a href="{{ path('deleteReservation') }}/{{ reservation.id }}" class="btn btn-warning mb-2">Supprimer</a>
+    <a href ="{{ path('editReservation') }}/{{ reservation.id}}" class="btn btn-secondary mb-2">Modifier/Ajouter un commentaire<a/>
     {% endfor %}
     </ul>
 </main>
