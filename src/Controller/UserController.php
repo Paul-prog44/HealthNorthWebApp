@@ -217,13 +217,12 @@ class UserController extends AbstractController
                         $session->set('email_address', $user['emailAddress']);
                         $session->set('social_security', $user['socialSecurity']);
                         $session->set('medical_file_id', $user['medicalFile']['id']);
+
                         return $this->render('confirmation/confirmationAccountCreation.html.twig');
                     }
                 } catch (Exception $e) {
-                    // Ajout de plus de détails à l'exception pour faciliter le débogage
                     return $this->render('errorTemplate.html.twig', ["error" => $e->getMessage()]);
                 }
-            
             
         } else if ($this->checkPassword($_POST['password']) && $_POST['password'] !== $_POST['passwordConfirmation'] ) {
             return $this->render('error/differentPasswords.html.twig');
