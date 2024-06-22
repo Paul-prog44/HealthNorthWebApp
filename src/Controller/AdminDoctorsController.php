@@ -117,7 +117,7 @@ class AdminDoctorsController extends AbstractController
         $centers = $this->fetchApiCentersData();
         $specialties = $this->fetchSpecialties();
         return $this->render('creation/addDoctor.html.twig', [
-            "centers" => $centers, 
+            "centers" => $centers,
             "specialties" => $specialties
         ]);
     }
