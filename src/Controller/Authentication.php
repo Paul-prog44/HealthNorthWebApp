@@ -85,7 +85,7 @@ class Authentication extends AbstractController
         $emailAddress = $_POST['emailAddress'];
         $password =  $_POST['password'];
 
-        $query = 'SELECT * FROM north_health.user WHERE email = :email'; //WHERE email_address = jsmith@gmail.com
+        $query = 'SELECT * FROM north_health.user WHERE email = :email';
         $params = ['email' => $emailAddress];
         try {
 
