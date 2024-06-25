@@ -227,7 +227,7 @@ class UserController extends AbstractController
         } else if ($this->checkPassword($_POST['password']) && $_POST['password'] !== $_POST['passwordConfirmation'] ) {
             return $this->render('error/differentPasswords.html.twig');
         } else {
-            return $this->render('error/passwordUnsafe.html.twig'); 
+            return $this->render('error/passwordUnsafe.html.twig');
         }
         
     }

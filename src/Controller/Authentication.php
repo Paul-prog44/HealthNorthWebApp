@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Exception;
 use App\Service\DatabaseService;
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,6 +28,8 @@ class Authentication extends AbstractController
     #[Route('/connexion', name : 'connexion')]
     public function connexion() : Response
     {
+        // $dateTime = new DateTime();
+        // dd($dateTime);
         return $this->render('user/connexion.html.twig');
     }
 

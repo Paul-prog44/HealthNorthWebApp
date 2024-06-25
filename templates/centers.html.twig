@@ -6,6 +6,7 @@
 
 <main>
     <h1>Choix du centre :</h1>
+    <p>Nombre de centre disponible : {{ centerCities|length }}<p>
     <label for="city">Choisissez une ville :</label>
     <form action="{{ path('centerCity') }}" method="POST"> 
     <select id="selectedCity" name="selectedCity">
