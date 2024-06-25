@@ -28,8 +28,6 @@ class Authentication extends AbstractController
     #[Route('/connexion', name : 'connexion')]
     public function connexion() : Response
     {
-        // $dateTime = new DateTime();
-        // dd($dateTime);
         return $this->render('user/connexion.html.twig');
     }
 
@@ -64,6 +62,17 @@ class Authentication extends AbstractController
                 $session->set('address', $result[0]['address']);
                 $session->set('email_address', $result[0]['email_address']);
                 $session->set('social_security', $result[0]['social_security']);
+
+                //Enregistrement de la dernière connexion de l'utilisateur
+                $query = 'UPDATE north_health.patient SET last_login = NOW() WHERE  email_address = :email';
+                $params = ['email' => $emailAddress];
+                try {
+                    $result = $this->databaseService->executeQuery($query, $params);
+                } catch (Exception $e) {
+                    return $this->render('errorTemplate.html.twig', ["error" => $e]);
+                }
+
+                
 
                 return $this->render('user/connexionSuccess.html.twig');
             } else  {
