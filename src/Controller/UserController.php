@@ -48,6 +48,20 @@ class UserController extends AbstractController
         return $content;
     }
 
+    //Ajout d'une fonction de récupération des civilités
+    public function fetchGender()
+    {
+        $response = $this->httpClient->request(
+            'GET', 'https://127.0.0.1:8000/api/genders', [
+                'verify_peer' => false,
+                'verify_host' => false,
+            ]);
+        $content = $response->getContent();
+        $content = $response->toArray();
+
+        return $content;
+    }
+
     public function postAccountCreation() 
     {
             $response = $this->httpClient->request(
@@ -186,7 +200,16 @@ class UserController extends AbstractController
     #[Route('accountCreation', name : 'accountCreation')]
     public function accountCreation() : Response
     {
-        return $this->render('user/createAccount.html.twig');
+        //Récupération des civilités
+        try {
+            $genders = $this->fetchGender();
+            return $this->render('user/createAccount.html.twig', ['genders' => $genders]);
+
+
+        } catch (Exception $e) {
+            return $this->render('errorTemplate.html.twig', ["error" => $e]);
+        }
+
     }
     
     

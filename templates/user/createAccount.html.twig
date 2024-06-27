@@ -10,10 +10,22 @@
     <a>{% block errorMessage %}{% endblock %}</a>
     <form action="{{ path('confirmationAccountCreation') }}" method="POST">
                 
-            <div class="input-group input-group-sm mb-3">
+            {# <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm"><label for="gender" >Civilité :</label></span>
                 <input name="gender" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required>
-            </div>
+            </div> #}
+
+
+            {# Affichage des civilités en fonction du retour de la route /api/gender de l'API #}
+
+            <select id="selectedCivility" name="selectedCivility">
+                <option value='all' selected>Civilité<option>
+                {% for gender in genders %}
+                    <option value="{{gender.gender}}">{{gender.gender}}</option>
+                {% endfor %}
+            <select>
+
+
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm"><label for="firstName">Prénom :</label></span>
                 <input name="firstName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required>
